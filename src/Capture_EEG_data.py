@@ -15,7 +15,7 @@ from brainflow.board_shim import (
 )
 
 # ====== CONFIG ======
-LABEL = "calm"              # change between runs: "calm", "non_calm", etc.
+LABEL = "non_calm"              # change between runs: "calm", "non_calm", etc.
 DURATION_SEC = 90           # how long to record this label
 OUTPUT_DIR = "data"         # folder for CSV files
 
