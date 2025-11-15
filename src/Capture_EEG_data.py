@@ -15,8 +15,8 @@ from brainflow.board_shim import (
 )
 
 # ====== CONFIG ======
-LABEL = "non_calm"              # change between runs: "calm", "non_calm", etc.
-DURATION_SEC = 90           # how long to record this label
+LABEL = "sleep"              # change between runs: "calm", "non_calm", "sleep", etc.
+DURATION_SEC = 20           # how long to record this label
 OUTPUT_DIR = "data"         # folder for CSV files
 
 BOARD_ID = BoardIds.MUSE_2_BOARD.value
@@ -125,7 +125,7 @@ def save_csv(data: np.ndarray, label: str) -> str:
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-    filename = f"{label}_{ts}.csv"
+    filename = f"{label}.{ts}.csv"
     path = os.path.join(OUTPUT_DIR, filename)
 
     header = ["timestamp_s", "eeg_1", "eeg_2", "eeg_3", "eeg_4"]

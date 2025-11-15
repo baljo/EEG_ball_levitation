@@ -1,4 +1,4 @@
-# EEG ball levitation (Muse→EI spectral→Keras/TFLite→Photon 2). Fixes scaler & double-log; uses EI-like log10 once. 2025-11-14 18:00 — Thomas Vikström
+# EEG ball levitation: Muse→EI spectral→Keras/TFLite→Photon 2, now without external scaler and using EI log-spectral features directly; 2025-11-14 23:25, Thomas Vikström
 
 import os
 import sys
@@ -51,34 +51,9 @@ from spectral_analysis import generate_features
 MODEL_TFLITE = "EEG_float32.lite"
 MODEL_H5 = "EEG_model_64.h5"
 
-# ---- shared scaler (loaded once) ----
-MEAN = None
-STD_SAFE = None
-
-def _load_scaler():
-    global MEAN, STD_SAFE
-    if MEAN is not None and STD_SAFE is not None:
-        return
-    MEAN = np.load("ei_scaler_mean.npy").astype(np.float32)
-    STD = np.load("ei_scaler_std.npy").astype(np.float32)
-    STD_SAFE = np.where(STD == 0.0, 1.0, STD)
-    print(f"[INFO] Scaler loaded: {MEAN.size} features")
-
-def _apply_scaler(x_1xn: np.ndarray) -> np.ndarray:
-    if MEAN is None or STD_SAFE is None:
-        _load_scaler()
-    if x_1xn.shape[1] != MEAN.size:
-        raise ValueError(f"Feature length {x_1xn.shape[1]} != scaler length {MEAN.size} "
-                         f"(check DSP params, band edges, and channel order).")
-    z = (x_1xn - MEAN) / STD_SAFE
-    # Debug one-liner:
-    f = z[0]
-    print(f"[DEBUG] std-features min/mean/max: {f.min():.3f} / {f.mean():.3f} / {f.max():.3f}")
-    return z
-
-
 if os.path.exists(MODEL_H5):
     from tensorflow.keras.models import load_model
+
     model = load_model(MODEL_H5)
     INPUT_SHAPE = (1, model.input_shape[-1])
     EXPECTED_FEATURES = model.input_shape[-1]
@@ -86,19 +61,21 @@ if os.path.exists(MODEL_H5):
     print(f"[INFO] Using Keras backend, model: {MODEL_H5}")
 
     def infer(features: np.ndarray):
-        # features must already be in log10 space (exactly once)
+        # features already in EI log-spectral space
         x = features.reshape(1, -1).astype(np.float32)
-        x = _apply_scaler(x)
         return model.predict(x, verbose=0)[0]
 
 elif os.path.exists(MODEL_TFLITE):
     try:
         from tflite_runtime.interpreter import Interpreter
+
         backend = "tflite-runtime"
     except ImportError:
         import tensorflow as tf
+
         Interpreter = tf.lite.Interpreter
         backend = "tensorflow.lite"
+
     interpreter = Interpreter(model_path=MODEL_TFLITE)
     interpreter.allocate_tensors()
     input_details = interpreter.get_input_details()
@@ -109,10 +86,8 @@ elif os.path.exists(MODEL_TFLITE):
     print(f"[INFO] Using TFLite backend ({backend}), model: {MODEL_TFLITE}")
 
     def infer(features: np.ndarray):
-        # features must already be in log10 space (exactly once)
-        x = features.reshape(1, -1).astype(np.float32)
-        x = _apply_scaler(x)
-        x = x.reshape(INPUT_SHAPE).astype(np.float32)
+        # features already in EI log-spectral space
+        x = features.reshape(INPUT_SHAPE).astype(np.float32)
         interpreter.set_tensor(input_details[0]["index"], x)
         interpreter.invoke()
         return interpreter.get_tensor(output_details[0]["index"])[0]
@@ -127,13 +102,13 @@ else:
 BOARD_ID = BoardIds.MUSE_2_BOARD.value
 FS = 256.0                     # Hz
 WINDOW_SECONDS = 2.0           # window size in seconds
-STRIDE_SECONDS = 0.5           # how much to slide window (step) each iteration
-STABILITY_WINDOWS = 3          # number of last decisions to require stable target
-SMOOTH_WINDOWS = 1             # number of last probabilities to average
+STRIDE_SECONDS = 0.250           # stride between decisions
+STABILITY_WINDOWS = 4          # number of last decisions to require stable target
+SMOOTH_WINDOWS = 4             # number of last probabilities to average
 USE_MEDIAN_SMOOTH = True       # True=median smoothing, False=mean smoothing
 TARGET_THRESHOLD = 0.7
 
-# Edge Impulse Spectral Analysis params
+# Edge Impulse Spectral Analysis params (must match project)
 IMPLEMENTATION_VERSION = 4
 DRAW_GRAPHS = False
 AXES = ["eeg_1", "eeg_2", "eeg_3", "eeg_4"]
@@ -148,15 +123,11 @@ FFT_LENGTH = 64
 SPECTRAL_PEAKS_COUNT = 0
 SPECTRAL_PEAKS_THRESHOLD = 0
 SPECTRAL_POWER_EDGES = "0"
-# IMPORTANT: keep EI generate_features in *linear* and do log10 here exactly once.
-DO_LOG_IN_BLOCK = False
+DO_LOG_IN_BLOCK = True          # let EI block take log of spectrum (matches training)
 DO_FFT_OVERLAP = True
 WAVELET_LEVEL = 1
 WAVELET = ""
 EXTRA_LOW_FREQ = False
-
-# Log epsilon MUST match what you used when building ei_scaler_mean/std from log10(Xtrain)
-LOG_EPS = 1e-12
 
 LABELS = ["calm", "non_calm", "sleep"]
 TARGET_CLASS_INDEX = 1
@@ -210,7 +181,7 @@ def get_eeg_window(board: BoardShim, window_sec: float) -> np.ndarray | None:
 
 
 def ei_features_from_window(window: np.ndarray) -> np.ndarray:
-    """Compute EI spectral features; ensure *exactly one* log10 is applied (here)."""
+    """Compute EI spectral features (including log power inside the block)."""
     global _feature_mismatch_warned
 
     ch, n = window.shape
@@ -236,7 +207,7 @@ def ei_features_from_window(window: np.ndarray) -> np.ndarray:
         SPECTRAL_PEAKS_COUNT,
         SPECTRAL_PEAKS_THRESHOLD,
         SPECTRAL_POWER_EDGES,
-        DO_LOG_IN_BLOCK,        # keep False; we log below once
+        DO_LOG_IN_BLOCK,        # now True – same as in EI training
         DO_FFT_OVERLAP,
         WAVELET_LEVEL,
         WAVELET,
@@ -244,9 +215,6 @@ def ei_features_from_window(window: np.ndarray) -> np.ndarray:
     )
 
     feats = np.asarray(out["features"], dtype=np.float32)
-
-    # Apply log10 exactly once, with same epsilon used to build scaler
-    feats = np.log10(np.maximum(feats, LOG_EPS))
 
     if feats.size != EXPECTED_FEATURES:
         if not _feature_mismatch_warned:
@@ -298,6 +266,7 @@ def main():
             if window is None:
                 print("[TRACE] Not enough data yet for full window.")
                 time.sleep(STRIDE_SECONDS)
+                window_idx += 1
                 continue
 
             if window_idx < DEBUG_MAX_WINDOWS and (window_idx % DEBUG_EVERY_N == 0):
@@ -354,13 +323,19 @@ def main():
         print("\n[INFO] Stopping (Ctrl+C)...")
     finally:
         if ser:
-            try: ser.close()
-            except Exception: pass
+            try:
+                ser.close()
+            except Exception:
+                pass
         if board:
-            try: board.stop_stream()
-            except Exception: pass
-            try: board.release_session()
-            except Exception: pass
+            try:
+                board.stop_stream()
+            except Exception:
+                pass
+            try:
+                board.release_session()
+            except Exception:
+                pass
         print("[INFO] Clean shutdown complete.")
 
 
