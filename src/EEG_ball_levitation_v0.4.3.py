@@ -52,7 +52,7 @@ from spectral_analysis import generate_features
 
 
 # ----------------- Model selection and setup -----------------
-MODEL_TFLITE = "EEG_float32_FFT8.lite" # "EEG_float32.lite"
+MODEL_TFLITE = "EEG_float32_FFT8_1.lite" # "EEG_float32.lite"
 MODEL_H5 = "EEG_model_64.h5"
 
 if os.path.exists(MODEL_H5):
