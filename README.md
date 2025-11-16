@@ -86,13 +86,16 @@ Wiring is extremely simple, no soldering needed if you use above hardware. Do no
 * Connect the blower's black (-) wire to GND on Grove out
 
 ### Muse 2
-* No wiring needed, or even possible, but set it up according to the instructions. Remember that it can only stream to one device at a time, so don't have it connected to your phone while streaming EEG-data for this project.
+* No wiring needed, (or even possible!), but set up the device according to the instructions. Remember that it can only stream to one device at a time, so don't have it connected to your phone while streaming EEG-data for this project.
 
 
 ---
 
 # Software Components
 
+## Photon 2 program controlling the blower
+
+The [Photon 2 program](/src/levitate-ball-v0-1.ino)
 ### 1. EEG acquisition
 
 * BrainFlow Python library
