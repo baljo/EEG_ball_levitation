@@ -95,9 +95,14 @@ Wiring is extremely simple, no soldering needed if you use above hardware. Do no
 
 ## Photon 2 program controlling the blower
 
+
+### Installation
 Upload the [program](/src/levitate-ball-v0-1.ino) to your Photon 2. As the program doesn't need external libraries, you can use Particle's Web IDE if you want.
 
+### How it works
+
 The program is very straightforward:
+- It sets up a web server listening at port 9000
 - It's waiting for a number between 0-255 (in ASCII-form) through the serial port, or via Wi-Fi.
 - When a nubmer is received, it sets the blower speed accordingly. 
 - If a number has not been received the latest 30 seconds, it stops the blower. 
@@ -117,6 +122,24 @@ const int SERVER_PORT = 9000;             // TCP port for WiFi control
 const unsigned long COMMAND_TIMEOUT_MS = 30000UL;  // 30 seconds (adjust if you want)
 ```
 
+## Python program handling EEG-data and inferencing
+
+[This is the main program](/src/EEG_ball_levitation_v0.4.3.py), and while it at first sight might look a bit involved, the functionality itself is actually quite straightforward. 
+
+The program works like this:
+
+- It connects to the Photon 2, either through serial, or through Wi-Fi.
+- It opens the Keras .h5-file if it exists, otherwise the Tensorflow Lite file. Both are exported from Edge Impulse.
+- Using the Brainflow library it connects to Muse EEG, and starts receiving signals.
+- Using the [Spectral Analysis Python-library](https://github.com/edgeimpulse/processing-blocks/tree/master/spectral_analysis) from Edge Impulse, it processes features exactly as in EI Studio.
+- It runs inference against these processed features.
+- Finally, it sends a number 0-255 to the Photon 2. 
+  - By default it averages the latest few inference results to provide a smoother user experience. Otherwise it might jump too frequently between the three states.
+- It prints continuosly inference results for testing and possible troubleshooting needs.
+
+
+## Other programs
+There are a few other Python programs and files in the [src folder](/src/). These are not needed for normal operation, I have used them when building up the main program module by module, or for troubleshooting purposes. Touch them at your own risk!
 
 
 ### 1. EEG acquisition
