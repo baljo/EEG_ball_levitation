@@ -95,7 +95,30 @@ Wiring is extremely simple, no soldering needed if you use above hardware. Do no
 
 ## Photon 2 program controlling the blower
 
-The [Photon 2 program](/src/levitate-ball-v0-1.ino)
+Upload the [program](/src/levitate-ball-v0-1.ino) to your Photon 2. As the program doesn't need external libraries, you can use Particle's Web IDE if you want.
+
+The program is very straightforward:
+- It's waiting for a number between 0-255 (in ASCII-form) through the serial port, or via Wi-Fi.
+- When a nubmer is received, it sets the blower speed accordingly. 
+- If a number has not been received the latest 30 seconds, it stops the blower. 
+  - This is to cover e.g. for situations when the sending program has been stopped, and you want the blower to stop without having to unpower the blower.
+- If you connect the Photon 2 directly to your computer, you can, using a serial monitor, test the blower manually by transmitting a number 0-255.
+- If you are going to use Wi-Fi, you need to know its IP-address to be able to connect to it. 
+  - When you have connected the Photon 2 to your computer, the program is printing its IP-adress to the terminal, so store it somewhere for later use.
+
+There are very few settings in the program: `MOSFET_PIN`, `PWM_MIN` and `PWM_MAX`, `SERVER_PORT`, and `COMMAND_TIMEOUT_MS`. Using the hardware in this project, you might though not need to change them.
+
+```
+const int MOSFET_PIN = A2;                 // Grove MOSFET SIG → A2
+const int PWM_MIN    = 0;
+const int PWM_MAX    = 255;
+
+const int SERVER_PORT = 9000;             // TCP port for WiFi control
+const unsigned long COMMAND_TIMEOUT_MS = 30000UL;  // 30 seconds (adjust if you want)
+```
+
+
+
 ### 1. EEG acquisition
 
 * BrainFlow Python library
