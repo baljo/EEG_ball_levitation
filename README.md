@@ -70,7 +70,7 @@ In this project a PC is used as an edge device, but it can easily be replaced wi
 
 # INSTRUCTIONS
 
-In this section you'll learn how to collect data, train a ML-model, connect the devices, and finally, let the ping pong ball levitate.
+In this section you'll learn how to collect data, train and deploy a ML-model, connect the devices, and finally, let the ping pong ball levitate.
 
 ## Install Python programs
 
@@ -115,7 +115,7 @@ OUTPUT_DIR = "data"             # folder for CSV files
 
 ## Build a model with Edge Impulse Studio
 
-In this section you'll learn how to import the EEG-data, build, train, and test a ML-model. 
+In this section you'll learn how to import the EEG-data, build, train, test, and deploy a ML-model. 
 A prerequisite for the following steps is that you have created an EI account (free tier is more than enough for this project), and logged into it.
 
 ### Import data
@@ -152,6 +152,26 @@ In this step you'll set up data processing and learning blocks.
 - Click `Save Impulse`
 
 ![](/images/EI_006.png)
+
+### Configure spectral features
+
+Here you'll configure FFT-settings ([Fast Fourier Transform](https://en.wikipedia.org/wiki/Fast_Fourier_transform)), and generate features.
+
+- Select `Spectral features`
+- Fill in the settings like in the screenshot below
+  - feel free to experiment with these later, it's however important to update the EEG-inferencing Python program accordingly
+- Click `Save parameters`
+- On next page, click `Generate features`
+  - Depending on the data amount and server load, this step typically takes a couple of minutes or so
+
+![](/images/EI_009.png)
+
+
+### Train the model
+
+### Test the model
+
+### Deploy the model
 
 
 ## Wiring
