@@ -96,9 +96,10 @@ LABEL = "non_calm.high_load"    # change between runs: "calm", "non_calm", "slee
 DURATION_SEC = 20               # how long to record this label
 OUTPUT_DIR = "data"             # folder for CSV files
 ```
-* Set `LABEL` to the label you want to use in Edge Impulse. When importing data where the file name will represent the label, only the part before the first dot (.) will be used, so in above example the final label = `non_calm`. In the example below, I wanted to add a note indicating this file included data when I had a high cognitive load. This in case I want to use this explicit sample later on.
-* Set `DURATION_SEC` to how long you want the sample to be. 20-30 seconds is good to start with. Only when having your eyes closed and relaxing, it's easy to have 1-3 minutes or so.
-* `OUTPUT_DIR` is used if you want your data to reside in a subfolder (recommended).
+- Set `LABEL` to the label you want to use in Edge Impulse. When importing data where the file name will represent the label, only the part before the first dot (.) will be used, so in above example the final label = `non_calm`. In the example below, I wanted to add a note indicating this file included data when I had a high cognitive load. This in case I want to use this explicit sample later on.
+  - To avoid the need to rename files later, always add a dot (.) after the label, even if you don't add something else!
+- Set `DURATION_SEC` to how long you want the sample to be. 20-30 seconds is good to start with. Only when having your eyes closed and relaxing, it's easy to have 1-3 minutes or so.
+- `OUTPUT_DIR` is used if you want your data to reside in a subfolder (recommended).
 
 #### Start collecting data
 
@@ -110,6 +111,7 @@ OUTPUT_DIR = "data"             # folder for CSV files
   - *calm* = eyes open, relax without moving, avoid blinking if possible
   - *non_calm* = eyes open, blink and moving ok. You can also experiment with high cognitive load in this state, e.g. count down from 100 to 0 with 7 (93, 86, 79...) 
 - Keep same label, or change it when ready to move to next one, rinse and repeat.
+  - Try to collect roughly same amount of data for each label.
 
 ## Build a model with Edge Impulse Studio
 
@@ -118,14 +120,39 @@ A prerequisite for the following steps is that you have created an EI account (f
 
 ### Import data
 
+This step is about creating a import model via the CSV Wizard, and importing the sample files.
+
 - Go to `Data acquisition`
 - Click on `CSV Wizard`, upload one of your recorded CSV-files, and use following settings:
   - Timeseries in rows
   - Timestamp in seconds
+  - Length 2000 ms (= 2 seconds)
   - Frequency 256 Hz
-- After this you 
+- After this you can upload all files using the default options. Edge Impulse will use file names - everything until the first dot (.) - as label for each sample in the file
 
 ![](/images/EI_003.png)
+
+Once the files are uploaded you'll see the balance between the labels as well as the split between training and test data. If there's a huge discrepancy between the labels, you should record more data for the misrepresented labels to get a good balance. 
+
+![](/images/EI_004.png)
+
+### Create an impulse
+
+In this step you'll set up data processing and learning blocks.
+
+- Select `Create impulse`
+- Set up the time series data like in the picture
+  - Window size = 2000 ms
+  - Window increase = 500 ms
+  - Frequency 256 Hz
+  - Checkmark Zero-pad data (= shorter samples than the window size will be filled with zeroes at the end)
+- Select `Spectral Analysis` as processing block and ensure all four axes are selected
+- Select 'Classification` as learning block and ensure spectral features is selected
+- You should now see all three labels as output features
+- Click `Save Impulse`
+
+![](/images/EI_006.png)
+
 
 ## Wiring
 
