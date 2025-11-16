@@ -1,16 +1,15 @@
 # Mind Blowing Brain Hack - Levitate a Ball with your thoughts!
 
 
-
 ## Overview
 
-While this project is neither *brain surgery* nor *rocket science*, it involves using only your mind to get a ball to fly!
+While this project is neither *brain surgery* nor *rocket science*, it still involves using only your mind to get a ball flying!
 
 Jokes aside, the project demonstrates a physical biofeedback system where a user can levitate a ping pong ball by changing their mental state. A Muse EEG headset captures brain activity, which is processed through Edge Impulse spectral features and a custom three class model: calm, sleep and non calm. The output class determines the blower speed, and the ball rises or falls  in real time. 
 
 The goal is to turn mental activity into physical movement in a direct and intuitive way. This creates a new form of feedback that is engaging, easy to understand and suitable for training focus or calmness.
 
-This idea as such is not novel - there are earlier projects using entry level EEG-devices that in some cases are marked as toys. Personally I have also earlier published projects using the Muse EEG headband to control devices. What makes this project different, is that it focuses on the biofeedback side with the aim for the user to target a balanced mental state. Furthermore, by using Edge Impulse, the model can easily be implemented and updated, even amended with more mental states.
+This idea as such is not novel - there are earlier projects using entry level EEG-devices that in some cases are marketed as toys. Personally I have also earlier published projects using the Muse EEG headband to control devices. What makes this project different though, is that it focuses on the biofeedback side with the aim for the user to target a balanced mental state. Furthermore, by using Edge Impulse, the model can easily be implemented and updated, even amended with more mental states.
 
 ---
 
@@ -20,7 +19,7 @@ This idea as such is not novel - there are earlier projects using entry level EE
 
 Traditional neurofeedback relies on charts or sounds. This project replaces abstract feedback with a real physical object and a three level control scheme:
 
-- sleep (0 %) pulls the ball down
+- eyes closed (0 %) pulls the ball down
 - calm (50 %) keeps it near the center
 - non calm (100 %) pushes it up
 
@@ -30,11 +29,9 @@ The user’s task is to keep the ball hovering close to the middle. This means t
 
 The system can help users to practice relaxation, build sustained attention, and learn how internal states influence performance. This makes it relevant for wellness, mental health training, high performance environments and education.
 
-
 ### 3. Foundation for hands free control
 
 The same architecture can scale to for example: assistive devices, hands free interfaces, robotics, game control, accessibility tools, and many others.
-
 This project shows that simple EEG patterns combined with edge ML can drive real world devices.
 
 ---
@@ -52,7 +49,7 @@ An Edge Impulse model classifies the window into one of three mental states: cal
 
 #### 4. Real time control
 Inference runs every 200 ms. A class history buffer smooths predictions so that brief spikes do not cause sudden blower changes.  
-The predicted class maps to a PWM value between 0 and 255, sent over WiFi to a Particle Photon 2 that drives a 12 V blower through a Grove MOSFET. The airflow lifts or lowers a ping pong ball in real time.
+The predicted class maps to a PWM value between 0 and 255, sent over Wi-Fi to a Particle Photon 2 that drives a 12 V blower through a Grove MOSFET. The airflow lifts or lowers a ping pong ball in real time.
 
 
 
@@ -67,7 +64,30 @@ The predicted class maps to a PWM value between 0 and 255, sent over WiFi to a P
 * [Grove MOSFET for Arduino](https://www.seeedstudio.com/Grove-MOSFET.html) - can be substituted with another suitable MOSFET
 * [12 V blower fan](https://www.sparkfun.com/blower-squirrel-cage-12v.html)
 * Ping Pong ball
-* 12 V power source, adapter or battery
+* 12 V power source (wall adapter or battery)
+* Powerbank (only if you want the Photon 2 to be stand-alone and not connected to your computer)
+
+In this project a PC is used as an edge device, but it can easily be replaced with e.g. a Raspberry Pi or any other BLE-equipped device running Python and supported by Brainflow. With a Raspberry Pi you don't even need the Photon 2 as long as you can connect a MOSFET to it. And, if Python is not your cup of tea, Brainflow supports almost any modern language like Julia, Rust, C#, Swift, TypeScript, etc. Even some game engines are supported! 
+
+## Wiring
+
+Wiring is extremely simple, no soldering needed if you use above hardware. Do note that you can choose to have your Photon 2 connected to your computer and communicate through a serial port, or you can have it as a standalone device and communicate through Wi-Fi.
+
+### Photon 2
+* Plug your Photon 2 into the Grove Shield. Power it via a micro-USB cable connected to your computer. 
+* Follow Particle's [instructions](https://setup.particle.io/) to set up your MCU and connect to your Wi-Fi network. 
+
+### Grove MOSFET and 12V power source
+
+* Connect the MOSFET with a Grove cable to the A2 Grove port on the shield
+* Connect a wire from + on your 12V source to + on Grove in
+* Connect a wire from - on your 12V source to - on  Grove in
+* Connect the blower's red (+) wire to + on Grove out
+* Connect the blower's black (-) wire to GND on Grove out
+
+### Muse 2
+* No wiring needed, or even possible, but set it up according to the instructions. Remember that it can only stream to one device at a time, so don't have it connected to your phone while streaming EEG-data for this project.
+
 
 ---
 
@@ -75,7 +95,7 @@ The predicted class maps to a PWM value between 0 and 255, sent over WiFi to a P
 
 ### 1. EEG acquisition
 
-* BrainFlow
+* BrainFlow Python library
 * Python serial
 * Internal windowing and filtering
 
