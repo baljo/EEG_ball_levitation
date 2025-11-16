@@ -122,7 +122,7 @@ A prerequisite for the following steps is that you have created an EI account (f
 
 This step is about creating a import model via the CSV Wizard, and importing the sample files.
 
-- Go to `Data acquisition`
+- Select `Data acquisition` from the menu
 - Click on `CSV Wizard`, upload one of your recorded CSV-files, and use following settings:
   - Timeseries in rows
   - Timestamp in seconds
@@ -140,7 +140,7 @@ Once the files are uploaded you'll see the balance between the labels as well as
 
 In this step you'll set up data processing and learning blocks.
 
-- Select `Create impulse`
+- Select `Create impulse` from the menu
 - Set up the time series data like in the picture
   - Window size = 2000 ms
   - Window increase = 500 ms
@@ -157,7 +157,7 @@ In this step you'll set up data processing and learning blocks.
 
 Here you'll configure FFT-settings ([Fast Fourier Transform](https://en.wikipedia.org/wiki/Fast_Fourier_transform)), and generate features.
 
-- Select `Spectral features`
+- Select `Spectral features` from the menu
 - Fill in the settings like in the screenshot below
   - feel free to experiment with these later, it's however important to update the EEG-inferencing Python program accordingly
 - Click `Save parameters`
@@ -169,7 +169,40 @@ Here you'll configure FFT-settings ([Fast Fourier Transform](https://en.wikipedi
 
 ### Train the model
 
+Here you'll start to see some first results of your work!
+
+- Select `Classifier` from the menu
+- Try first with same settings as in the screenshot, this is though an iterative process, so feel free to change settings if you find the model is not performing well.
+- Click `Save & train`
+  - You'll see the progress in the upper right window
+  - This is the step that typically consumes most time, from a few minutes up to several hours. With a few minutes of data, and with these settings, the training should be ready in under 10 minutes.
+  - Note that everything happens on the server side, so if the training takes much longer than expected, you don't need to keep the browser session open if you need to shut down your computer.
+- Once the training is complete, you'll see the accuracy. With EEG-data that can be messy and have lots of artefacts from blinking, muscle twitching etc., everything above 90% or so can be considered a success.
+  - While 100% accuracy might at first glance be a goal to desire, there's a risk of "overfitting", meaning your model works perfect with the exact data samples you've used, but not with data it hasn't seen before. This often happens with smaller data amounts and too large neural networks. 
+
+![](/images/EI_012.png)
+
+**Accuracy low?** 
+
+If the accuracy is very low, the root cause is most often on the data side, or on how you've built up your ML-model.
+- The visual explorer in the bottom right corner is in these cases probably showing that the data clusters are mostly overlapping each other.
+- First verify that you have roughly same amount of data for each label
+- Try to verify that the uploaded data is really representing respective label.
+    - If this would a computer vision project, you'd verify that photos using the label 'cat' indeed are of cats and not dogs or zebras.
+    - With EEG-data it's however nearly impossible to look at the data to be able to confirm it. Only data samples with e.g. eye blinks, jaw clenches or similar are shown as spikes.
+- Building ML-models is an iterative process, even more so for this type of EEG-project. Thus, I recommend that you initially collect a smaller amount of data, train and test the model. 
+- If you already in the beginning notice poor accuracy, you might consider deleting or inactivating the uploaded samples and record new data. Once you have a good base, you can consider collecting more and more diverse data.
+
+
 ### Test the model
+
+Here you'll verify how well your model performs on data it hasn't seen before, i.e. the approximately 20% of data put aside in the data upload.
+
+- Select `Model testing` from the menu
+- Click `Classify all`
+- Similarly as after completion of the training step you'll get an accuracy-%. This is typically somewhat lower than in the training phase. If it's much lower, you might have overfitted your model, follow the steps under **Accuracy low?** above.
+
+![](/images/EI_015.png)
 
 ### Deploy the model
 
