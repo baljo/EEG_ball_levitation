@@ -126,6 +126,10 @@ const unsigned long COMMAND_TIMEOUT_MS = 30000UL;  // 30 seconds (adjust if you 
 
 ### Installation
 
+Clone the repository, decide on if you want to install it directly on your device, or in a virtual environment. Then open a command prompt and run `pip install -r requirements.txt`. This will install all needed libraries to the selected environment.
+
+Start the program from a command prompt with `python EEG_ball_levitation_v0.4.3.py --wifi-host <Photon 2 IP-adress> --wifi-port 9000`. 
+
 
 ### How it works
 
@@ -141,6 +145,94 @@ The program works like this:
 - Finally, it sends a number 0-255 to the Photon 2. 
   - By default it averages the latest few inference results to provide a smoother user experience. Otherwise it might jump too frequently between the three states.
 - It prints continuosly inference results for testing and possible troubleshooting needs.
+
+#### Selected parameters
+
+This section explains a few selected parameters that you might need to change according to your setup.
+
+
+**ML-model:** Replace these with the file/files you export from Edge Impulse.
+```
+# ----------------- Model selection and setup -----------------
+MODEL_TFLITE = "EEG_float32_FFT8_1.lite" # "EEG_float32.lite"
+MODEL_H5 = "EEG_model_64.h5"
+```
+
+**Impulse settings:** These are from `Create impulse`in EI. The first two ones have to be same as in EI, but feel free to experiment with the stride if you want to. See [this documentation](https://docs.edgeimpulse.com/studio/projects/impulse-design#time-series-audio,-vibration,-movements), especially the sketch, how the stride (= window increase) works.
+```
+FS = 256.0  # Hz
+WINDOW_SECONDS = 2.0  # window size in seconds
+STRIDE_SECONDS = 0.250  # stride between decisions
+```
+
+**Smoothing and threshold settings:** These are used to average the inference results. The threshold 0.7 means that the ML-model needs to be at least 70% confident of a prediction for that prediction to be triggered.
+```
+STABILITY_WINDOWS = 10  # (tests) number of last decisions to require stable target
+SMOOTH_WINDOWS = 5  # (tests) number of last probabilities to average
+USE_MEDIAN_SMOOTH = True  # (tests) True=median smoothing, False=mean smoothing
+TARGET_THRESHOLD = 0.7
+
+# For live blower mapping we use class history instead:
+CLASS_HISTORY_WINDOWS = 8  # number of last predicted classes to majority-vote
+```
+
+**Spectral features settings:** These needs to be identical as in the spectral features menu in EI. So, if you for example in EI Studio find out that a FFT length of 16 works better, you need to change `FFT_LENGTH`to 16 here. These parameters, together with the window size, ensure the input layer to your neural network will be same as in EI. It they aren't, you'll get a message like `...got 54, expected 36...`. 
+
+
+```
+AXES = ["eeg_1", "eeg_2", "eeg_3", "eeg_4"]
+
+SCALE_AXES = 1.0
+INPUT_DECIMATION_RATIO = 1
+FILTER_TYPE = "none"
+FILTER_CUTOFF = 0
+FILTER_ORDER = 0
+ANALYSIS_TYPE = "FFT"
+FFT_LENGTH = 8
+SPECTRAL_PEAKS_COUNT = 0
+SPECTRAL_PEAKS_THRESHOLD = 0
+SPECTRAL_POWER_EDGES = "0"
+DO_LOG_IN_BLOCK = True  # let EI block take log of spectrum (matches training)
+DO_FFT_OVERLAP = True
+WAVELET_LEVEL = 1
+WAVELET = ""
+EXTRA_LOW_FREQ = False
+```
+
+**Labels:** These have to be same labels as you've used in EI.
+```
+LABELS = ["calm", "non_calm", "sleep"]
+
+# Index of the "target" class for the test-modes (threshold logic)
+TARGET_CLASS_INDEX = 1  # non_calm
+
+# Class indices for blower mapping (must match LABELS)
+CLASS_CALM = 0
+CLASS_NON_CALM = 1
+CLASS_SLEEP = 2
+```
+
+**Serial and Wi-Fi port settings:**
+
+These are defalt settings, but can be overridden in the command prompt.
+```
+SERIAL_PORT = "COM3"
+SERIAL_BAUD = 115200
+DEFAULT_WIFI_PORT = 9000
+```
+
+**CLI-arguments available:**
+
+These are optional, and to be used if you want to override the default settings.
+* --serial-port COM3
+* --serial-baud 115200
+* --wifi-host aaa.bbb.ccc.ddd = IP-address of your Photon 2 if you want to use Wi-Fi
+* --wifi-port xxxx = default is 9000, but can be overridden
+* --no-output = disabling blower output entirely, if you e.g. want to just watch the results on your screen
+
+For troubleshooting purposes only:
+* --test-features "processed features" = copy **processed features** from EI **after** the spectral analysis block
+* --test-raw "raw flattened data" = copy **raw flattened data** from EI **before** the spectral analysis block
 
 
 ## Other programs
