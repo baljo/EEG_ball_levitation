@@ -15,9 +15,9 @@ from brainflow.board_shim import (
 )
 
 # ====== CONFIG ======
-LABEL = "non_calm.high_load"              # change between runs: "calm", "non_calm", "sleep", etc.
-DURATION_SEC = 20           # how long to record this label
-OUTPUT_DIR = "data"         # folder for CSV files
+LABEL = "non_calm.high_load"    # change between runs: "calm", "non_calm", "sleep", etc.
+DURATION_SEC = 20               # how long to record this label
+OUTPUT_DIR = "data"             # folder for CSV files
 
 BOARD_ID = BoardIds.MUSE_2_BOARD.value
 USE_MAC = False             # set True and fill MAC once stable

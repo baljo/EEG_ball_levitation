@@ -51,11 +51,10 @@ An Edge Impulse model classifies the window into one of three mental states: cal
 Inference runs every 200 ms. A class history buffer smooths predictions so that brief spikes do not cause sudden blower changes.  
 The predicted class maps to a PWM value between 0 and 255, sent over Wi-Fi to a Particle Photon 2 that drives a 12 V blower through a Grove MOSFET. The airflow lifts or lowers a ping pong ball in real time.
 
-
-
 ---
 
-# Hardware
+
+# HARDWARE NEEDED
 
 * [Muse 2 EEG headband](https://eu.choosemuse.com/products/muse-2)
 * PC running Python and BrainFlow
@@ -68,6 +67,65 @@ The predicted class maps to a PWM value between 0 and 255, sent over Wi-Fi to a 
 * Powerbank (only if you want the Photon 2 to be stand-alone and not connected to your computer)
 
 In this project a PC is used as an edge device, but it can easily be replaced with e.g. a Raspberry Pi or any other BLE-equipped device running Python and supported by Brainflow. With a Raspberry Pi you don't even need the Photon 2 as long as you can connect a MOSFET to it. And, if Python is not your cup of tea, Brainflow supports almost any modern language like Julia, Rust, C#, Swift, TypeScript, etc. Even some game engines are supported! 
+
+# INSTRUCTIONS
+
+In this section you'll learn how to collect data, train a ML-model, connect the devices, and finally, let the ping pong ball levitate.
+
+## Install Python programs
+
+You'll basically only need two Python programs, one for capturing data to be imported into Edge Impulse, another for inferencing and sending signals to the blower. While these programs of course could be combined, and controlled via parameters, or a menu, it's often easier to keep completely different modules separated.
+
+Clone the repository, decide on if you want to install it directly on your device, or in a virtual environment. Then open a command prompt and run `pip install -r requirements.txt`. This will install all needed libraries to the selected environment.
+
+## Set up your Muse EEG device
+
+Start your Muse headset and wear it properly, it should **not** be connected to your phone or other device in this project.
+
+## Capture EEG-data for Edge Impulse
+
+In this chapter you'll learn how to collect data for Edge Impulse.
+
+### Usage
+
+Here you'll use the [Capture_EEG_data.py](/src/Capture_EEG_data.py) program. There are only three settings you need to know:
+
+```
+# ====== CONFIG ======
+LABEL = "non_calm.high_load"    # change between runs: "calm", "non_calm", "sleep", etc.
+DURATION_SEC = 20               # how long to record this label
+OUTPUT_DIR = "data"             # folder for CSV files
+```
+* Set `LABEL` to the label you want to use in Edge Impulse. When importing data where the file name will represent the label, only the part before the first dot (.) will be used, so in above example the final label = `non_calm`. In the example below, I wanted to add a note indicating this file included data when I had a high cognitive load. This in case I want to use this explicit sample later on.
+* Set `DURATION_SEC` to how long you want the sample to be. 20-30 seconds is good to start with. Only when having your eyes closed and relaxing, it's easy to have 1-3 minutes or so.
+* `OUTPUT_DIR` is used if you want your data to reside in a subfolder (recommended).
+
+#### Start collecting data
+
+- Set the first label you want to record, e.g. `"sleep"` 
+- Start the program from a command prompt `python Capture_EEG_data.py`
+- Once you see that your Muse device has connected, data capture will very soon start
+- "Perform" the action, feel free to experiment with different actions as long as they are distinctive. Here the ones I used:
+  - *sleep* = keep your eyes closed and relax without moving (avoid falling asleep though :-D)
+  - *calm* = eyes open, relax without moving, avoid blinking if possible
+  - *non_calm* = eyes open, blink and moving ok. You can also experiment with high cognitive load in this state, e.g. count down from 100 to 0 with 7 (93, 86, 79...) 
+- Keep same label, or change it when ready to move to next one, rinse and repeat.
+
+## Build a model with Edge Impulse Studio
+
+In this section you'll learn how to import the EEG-data, build, train, and test a ML-model. 
+A prerequisite for the following steps is that you have created an EI account (free tier is more than enough for this project), and logged into it.
+
+### Import data
+
+- Go to `Data acquisition`
+- Click on `CSV Wizard`, upload one of your recorded CSV-files, and use following settings:
+  - Timeseries in rows
+  - Timestamp in seconds
+  - Frequency 256 Hz
+- After this you 
+
+![](/images/EI_003.png)
 
 ## Wiring
 
@@ -92,6 +150,7 @@ Wiring is extremely simple, no soldering needed if you use above hardware. Do no
 ---
 
 # Software Components
+
 
 ## Photon 2 program controlling the blower
 
@@ -122,11 +181,15 @@ const int SERVER_PORT = 9000;             // TCP port for WiFi control
 const unsigned long COMMAND_TIMEOUT_MS = 30000UL;  // 30 seconds (adjust if you want)
 ```
 
+---
+
+
+
+
+
 ## Python program handling EEG-data and inferencing
 
-### Installation
-
-Clone the repository, decide on if you want to install it directly on your device, or in a virtual environment. Then open a command prompt and run `pip install -r requirements.txt`. This will install all needed libraries to the selected environment.
+### Usage
 
 Start the program from a command prompt with `python EEG_ball_levitation_v0.4.3.py --wifi-host <Photon 2 IP-adress> --wifi-port 9000`. 
 
@@ -236,7 +299,7 @@ For troubleshooting purposes only:
 
 
 ## Other programs
-There are a few other Python programs and files in the [src folder](/src/). These are not needed for normal operation, I have used them when building up the main program module by module, or for troubleshooting purposes. Touch them at your own risk!
+There are a few other Python programs and files in the [src folder](/src/). Apart from the data capture program, these are not needed for normal operation, I have used them when building up the main program module by module, or for troubleshooting purposes. Touch them at your own risk!
 
 
 ### 1. EEG acquisition
