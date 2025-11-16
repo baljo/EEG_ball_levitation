@@ -8,7 +8,7 @@ const int PWM_MIN    = 0;
 const int PWM_MAX    = 255;
 
 const int SERVER_PORT = 9000;             // TCP port for WiFi control
-const unsigned long COMMAND_TIMEOUT_MS = 30000UL;  // 1 minute (adjust if you want)
+const unsigned long COMMAND_TIMEOUT_MS = 30000UL;  // 30 seconds (adjust if you want)
 
 TCPServer server(SERVER_PORT);
 TCPClient client;
