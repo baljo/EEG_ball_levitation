@@ -124,6 +124,11 @@ const unsigned long COMMAND_TIMEOUT_MS = 30000UL;  // 30 seconds (adjust if you 
 
 ## Python program handling EEG-data and inferencing
 
+### Installation
+
+
+### How it works
+
 [This is the main program](/src/EEG_ball_levitation_v0.4.3.py), and while it at first sight might look a bit involved, the functionality itself is actually quite straightforward. 
 
 The program works like this:
