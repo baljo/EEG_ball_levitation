@@ -445,7 +445,9 @@ I found two reasons for this behavior:
 
 ## Use only frontal electrodes
 
-While ML-models typically improve with more data, the data needs to be of relevance. 
+There is some research (Krigolson et al, Sidelinger et al, Beiramwand et al, Zhang et al) indicating that frontal/prefrontal channels can capture meaningful cognitive signals such as alpha activity and workload-related change. This means in practice that you *might* get better performance by only using data from the channels eeg2 and eeg3 as these map to AF7 (left frontal) and AF8 (right frontal). Right now all four channels are used, possible providing data not of importance for measuring mental state.
+
+To change this, you can simple unselect eeg1 and eeg4 in Edge Impulse and retrain. In addition you also need to change the Python program slightly to accommodate for fewer channels. Feel free to experiment! 
 
 # License
 
@@ -475,3 +477,27 @@ This project is open source and can be reused or modified for research, educatio
 - **Review on SCP neurofeedback and mechanisms**  
   Strehl, U. (2017). Slow cortical potentials neurofeedback in attention deficit hyperactivity disorder. *Frontiers in Human Neuroscience, 11, 135.*  
   https://www.frontiersin.org/articles/10.3389/fnhum.2017.00135
+
+- **Validation of Muse for ERP research**  
+  Krigolson, O. E., Williams, C. C., Norton, A., Hassall, C. D., & Colino, F. L. (2017).  
+  Choosing MUSE: Validation of a low-cost, portable EEG system for ERP research.  
+  *Frontiers in Neuroscience, 11, 109.*  
+  https://doi.org/10.3389/fnins.2017.00109
+
+- **Mobile EEG alpha-frequency reliability (Muse-derived IAF)**  
+  Sidelinger, L., Zhang, M., Frohlich, F., & Daughters, S. B. (2023).  
+  Day-to-day individual alpha frequency variability measured by a mobile EEG device relates to anxiety.  
+  *European Journal of Neuroscience, 57(11), 1815–1833.*  
+  https://doi.org/10.1111/ejn.16002
+
+- **Mental workload classification using only two prefrontal EEG channels**  
+  Beiramvand, M., Shahbakhti, M., Karttunen, N., Koivula, R., Turunen, J., & Lipping, T. (2024).  
+  Assessment of mental workload using a transformer network and two prefrontal EEG channels: An unparameterized approach.  
+  *IEEE Transactions on Instrumentation and Measurement, 73, 1–10.*  
+  https://doi.org/10.1109/TIM.2024.3395312
+
+- **Muse 2 performance in real-time cognitive workload detection**  
+  Zhang, L., & Cui, H. (2022).  
+  Reliability of MUSE 2 and Tobii Pro Nano at capturing mobile application users’ real-time cognitive workload changes.  
+  *Frontiers in Neuroscience, 16, 1011475.*  
+  https://doi.org/10.3389/fnins.2022.1011475
