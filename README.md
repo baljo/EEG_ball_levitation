@@ -238,8 +238,14 @@ Wiring is extremely simple, no soldering needed if you use above hardware. Do no
 * Plug your Photon 2 into the Grove Shield. Power it via a micro-USB cable connected to your computer. 
 * Follow Particle's [instructions](https://setup.particle.io/) to set up your MCU and connect to your Wi-Fi network. 
 
+Optional:
+* From the `images`-folder you'll find a [3D-printable STL-file](/images/Grove%20Shield%20Feather%20Case.stl) as protective bottom for the shield. 
+* Print this in a flexible material like TPU so it's easy to bend it around the shield PCB.
+* The bottom has engraved text for each Grove port, this is to make them easier to find without the need of a magnifying glass.
+* Orient the bottom so the USB-port of your Photon 2 aligns with the engraved `USB`.
 
-![](/images/Grove%20Shield%20Feather%20Case.stl)
+
+![](/images/Shield_bottom.png)
 
 ### Grove MOSFET and 12V power source
 
