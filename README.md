@@ -130,7 +130,7 @@ A prerequisite for the following steps is that you have created an EI account (f
 
 ### Import data
 
-This step is about creating a import model via the CSV Wizard, and importing the sample files.
+This step is about creating a import model via the CSV Wizard, and importing the sample files. If you've not used the CSV Wizard before, why not take a look at the [documentation](https://docs.edgeimpulse.com/studio/projects/data-acquisition/csv-wizard#csv-wizard).
 
 - Select `Data acquisition` from the menu
 - Click on `CSV Wizard`, upload one of your recorded CSV-files, and use following settings:
@@ -223,7 +223,7 @@ Deploying the model for this project is very simple as you only need to download
 - This downloads an optimized model
   - move it to the `src`-folder (where you have the Python-files)
   - I recommend you rename it to a shorter name
-  - this is the file name you'll later need to update in your Python-program, see [this](https://github.com/baljo/EEG_ball_levitation?tab=readme-ov-file#selected-parameters) for more info
+  - this is the file name you'll later need to update in your Python-program, as per [these](https://github.com/baljo/EEG_ball_levitation?tab=readme-ov-file#selected-parameters) instructions
 
 ![](/images/EI_018.png)
 
@@ -399,125 +399,7 @@ For troubleshooting purposes only:
 
 
 ## Other programs
-There are a few other Python programs and files in the [src folder](/src/). Apart from the data capture program, these are not needed for normal operation, I have used them when building up the main program module by module, or for troubleshooting purposes. Touch them at your own risk!
-
-
-### 1. EEG acquisition
-
-* BrainFlow Python library
-* Python serial
-* Internal windowing and filtering
-
-### 2. Edge Impulse
-
-* Spectral processing block
-* Model training and evaluation
-* TFLite model export
-* Public project with documentation
-
-### 3. Control logic
-
-* PWM mapping
-* Safety timeouts
-* WiFi command handling
-* Smoothing of predictions
-* Class history of last N predictions
-
----
-
-# Repository Structure
-
-```
-/SRC
-    EEG_ball_levitation.py
-    processing-blocks/
-    models/
-    utils/
-    README.md
-
-/hardware
-    wiring-diagram.jpg
-    blower-test.ino
-    photon2-firmware.cpp
-
-/data
-    raw-eeg-sessions
-    processed-features
-    model-metrics
-```
-
----
-
-# Setup Instructions
-
-## 1. Clone the repository
-
-```
-git clone https://github.com/yourrepo/mind-controlled-ball
-```
-
-## 2. Install Python dependencies
-
-Use the provided requirements file for BrainFlow and Edge Impulse processing blocks.
-
-```
-pip install -r requirements.txt
-```
-
-## 3. Connect the Muse headset
-
-Confirm that BrainFlow detects the device.
-
-```
-python check_muse.py
-```
-
-## 4. Run the ML inference program
-
-```
-python EEG_ball_levitation.py
-```
-
-## 5. Flash the Photon 2
-
-Upload the included firmware and verify serial output.
-
----
-
-# Model Training
-
-The Edge Impulse project is public and includes:
-
-* dataset
-* preprocessing steps
-* model parameters
-* validation metrics
-* README describing the workflow
-
-Data was collected in three controlled mental states. The spectral feature extractor used 256 samples per window and log scaled energy values. The model uses a small fully connected network suitable for microcontrollers.
-
----
-
-# Video Demonstration
-
-A short demonstration video shows:
-
-1. The EEG headset collecting data
-2. The Edge Impulse model predicting calm, sleep and non calm
-3. The blower responding in real time
-4. The ping pong ball rising and falling based on mental state
-
----
-
-# Future Work
-
-* Expand to regression for continuous control
-* Introduce servo movement or multiple actuators
-* Add Bluetooth audio feedback for training
-* Explore cognitive load patterns more deeply
-* Package as a classroom ready demo kit
-
----
+There are a few other Python programs, versions, and files in the [src folder](/src/). Apart from the data capture program, these are not needed for normal operation, I have used them when building up the main program module by module, or for troubleshooting purposes. Touch them at your own risk!
 
 # License
 
