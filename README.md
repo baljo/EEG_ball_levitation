@@ -414,13 +414,38 @@ While this project works as intended, there is of course room for adjustments or
 
 ### Ball not levitating very high?
 
-**Note:** The video is shot in a lightbox, and as the ceiling is quite low, 
+**Note:** The video is shot in a lightbox, and as the ceiling is quite low, it makes the ball oscillating more, and a few centimeters lower than in free air!
 
-With 12V the blower is a bit too weak to blow the ball very high. I have not tried to give it more oomph, but a reviewer mentioned they had run it with 20V. Not recommending it, but let me know if you've tried 😉
+Having said that, With 12V the blower is still a bit too weak to blow the ball very high. I have not tried to give it more oomph, but a reviewer mentioned they had run it with 20V. Not recommending it, but let me know if you've tried 😉
 
-Another option is to find a blower with more power, or a lighter ball or object.
+Another option is to find a blower with more power, or a lighter ball.
 
+### Ball oscillating?
 
+As you see in the top video, the ball is oscillating. It does this even in free air, though a bit less. To mitigate this, I used a short and light piece of yarn to keep the ball aligned better vertically.
+I had also considered 3D-printing some type of funnel or similar to possibly increase the ball altitude of the ball, but this would need a lot of designing, printing, and testing.
+
+![](/images/Final_video_yarn.gif)
+
+## ML-model aspects
+
+As with all ML-models, they can always be improved. Here I'll share a few experiences and thoughts.
+
+### Can you use my brain signals?
+
+Brains are different, and my EEG-signals **might** be different from yours, meaning you probably need to collect more data to get a good accuracy. As mentioned earlier, I recommend you do this iteratively, meaning you collect a bit more data, upload it and then train and test the model before continuing.
+
+### EEG-signal data quality issues?
+
+While testing the model, I had intermittent issues when the model simply did not perform as it should. It could e.g. always predict calm with 100% confidence, regardless of what I did, or the prediction seemed to be random.
+
+I found two reasons for this behavior:
+* As the winter has arrived, the air is quite dry. This means that the dry electrodes on the EEG-device don't make good contact with the skin during the first few minutes. It is actually recommended to wet them with water to speed up the initial connection.
+* Brain signals are measured in milli-volts, and at least the Muse EEG-device is sensitive to 50 Hz interference from nearby power conduits or cables. So, unless you want to go out in the forest or desert, at least stay a meter or two from the nearest electricity cables.
+
+## Use only frontal electrodes
+
+While ML-models typically improve with more data, the data needs to be of relevance. 
 
 # License
 
