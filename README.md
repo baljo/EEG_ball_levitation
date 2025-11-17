@@ -232,6 +232,8 @@ Wiring is extremely simple, no soldering needed if you use above hardware. Do no
 * Plug your Photon 2 into the Grove Shield. Power it via a micro-USB cable connected to your computer. 
 * Follow Particle's [instructions](https://setup.particle.io/) to set up your MCU and connect to your Wi-Fi network. 
 
+![](/images/Photon2.jpg)
+
 Optional:
 * From the `images`-folder you'll find a [3D-printable STL-file](/images/Grove%20Shield%20Feather%20Case.stl) as protective bottom for the Grove shield. 
 * Print this in a flexible material like TPU so it's easy to bend it around the shield's PCB.
@@ -248,6 +250,8 @@ Optional:
 * Connect a wire from - on your 12V source to - on  Grove in
 * Connect the blower's red (+) wire to + on Grove out
 * Connect the blower's black (-) wire to GND on Grove out
+
+![](/images/MOSFET.jpg)
 
 ### Muse 2
 * No wiring needed, (or even possible!), but set up the device according to the instructions. Remember that it can only stream to one device at a time, so don't have it connected to your phone while streaming EEG-data for this project.
