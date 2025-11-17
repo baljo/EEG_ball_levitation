@@ -247,15 +247,7 @@ Wiring is extremely simple, no soldering needed if you use above hardware. Do no
 * No wiring needed, (or even possible!), but set up the device according to the instructions. Remember that it can only stream to one device at a time, so don't have it connected to your phone while streaming EEG-data for this project.
 
 
----
-
-# Software Components
-
-
-## Photon 2 program controlling the blower
-
-
-### Installation
+## Install the Photon 2 program controlling the blower
 Upload the [program](/src/levitate-ball-v0-1.ino) to your Photon 2. As the program doesn't need external libraries, you can use Particle's Web IDE if you want.
 
 ### How it works
@@ -281,22 +273,29 @@ const int SERVER_PORT = 9000;             // TCP port for WiFi control
 const unsigned long COMMAND_TIMEOUT_MS = 30000UL;  // 30 seconds (adjust if you want)
 ```
 
----
 
-
-
-
-
-## Python program handling EEG-data and inferencing
+## Start the main program handling EEG-data and inferencing
 
 ### Usage
 
-Start the program from a command prompt with `python EEG_ball_levitation_v0.4.3.py --wifi-host <Photon 2 IP-adress> --wifi-port 9000`. 
+Before you start the program the first time, you should first take a look at the [Selected parameters](https://github.com/baljo/EEG_ball_levitation?tab=readme-ov-file#selected-parameters) below to understand which parameters you might need to change. These might be the file name of the ML-model you downloaded from the EI dashboard, window size, name of labels, number of FFT windows, etc. All these parameters are depending on your project setup in Edge Impulse Studio. 
+
+You change the parameter values in the main Python program `EEG_ball_levitation_v0.4.3.py`, [direct link](/src/EEG_ball_levitation_v0.4.3.py).
+
+### Start levitating
+
+Once you are ready:
+- Start your Photon 2 and provide the blower with power.
+  - The really first time you might want to connect your computer to the MCU, once you see that it works you can use Wi-Fi if you want.
+- Feel free to put a ping pong ball on your blower outlet!
+- Start the program from a command prompt with `python EEG_ball_levitation_v0.4.3.py --wifi-host <Photon 2 IP-adress> --wifi-port 9000`. 
+
+➨➤ If everything works alright, the blower should start reacting to your mental state! Read below for explanations how the program works.
 
 
 ### How it works
 
-[This is the main program](/src/EEG_ball_levitation_v0.4.3.py), and while it at first sight might look a bit involved, the functionality itself is actually quite straightforward. 
+While the main program at first sight might look a bit involved, the functionality itself is actually quite straightforward. 
 
 The program works like this:
 
