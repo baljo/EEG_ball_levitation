@@ -14,6 +14,7 @@ This idea as such is not novel - there are earlier projects using entry level EE
 
 The project combines low-tech components like a blower and ping pong ball with high-tech components like an EEG-device and the Edge Impulse platform.
 
+![](/images/Final_video.gif)
 ---
 
 ## Why This Matters
@@ -404,6 +405,22 @@ For troubleshooting purposes only:
 
 ## Other programs
 There are a few other Python programs, versions, and files in the [src folder](/src/). Apart from the data capture program, these are not needed for normal operation, I have used them when building up the main program module by module, or for troubleshooting purposes. Touch them at your own risk!
+
+# Further suggestions
+
+While this project works as intended, there is of course room for adjustments or improvements.
+
+## Physical aspects
+
+### Ball not levitating very high?
+
+**Note:** The video is shot in a lightbox, and as the ceiling is quite low, 
+
+With 12V the blower is a bit too weak to blow the ball very high. I have not tried to give it more oomph, but a reviewer mentioned they had run it with 20V. Not recommending it, but let me know if you've tried 😉
+
+Another option is to find a blower with more power, or a lighter ball or object.
+
+
 
 # License
 
