@@ -290,7 +290,7 @@ Once you are ready:
 - Feel free to put a ping pong ball on your blower outlet!
 - Start the program from a command prompt with `python EEG_ball_levitation_v0.4.3.py --wifi-host <Photon 2 IP-adress> --wifi-port 9000`. 
 
-➨➤ If everything works alright, the blower should start reacting to your mental state! Read below for explanations how the program works.
+➨➤ If everything works alright, the blower should start reacting to your mental state!
 
 
 ### How it works
