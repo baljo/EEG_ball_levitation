@@ -74,7 +74,10 @@ The predicted class maps to a PWM value between 0 and 255, sent over Wi-Fi to a 
 * [12 V blower fan](https://www.sparkfun.com/blower-squirrel-cage-12v.html)
 * Ping Pong ball
 * 12 V power source (wall adapter or battery)
+
+Optional:
 * Powerbank (only if you want the Photon 2 to be stand-alone and not connected to your computer)
+* 3D-printer, if you want to print a protective case for the Grove Shield, or a stand for the blower
 
 In this project a PC is used as an edge device, but it can easily be replaced with e.g. a Raspberry Pi or any other BLE-equipped device running Python and supported by Brainflow. With a Raspberry Pi you don't even need the Photon 2 as long as you can connect a MOSFET to it. And, if Python is not your cup of tea, Brainflow supports almost any modern language like Julia, Rust, C#, Swift, TypeScript, etc. Even some game engines are supported! 
 
@@ -234,6 +237,9 @@ Wiring is extremely simple, no soldering needed if you use above hardware. Do no
 ### Photon 2
 * Plug your Photon 2 into the Grove Shield. Power it via a micro-USB cable connected to your computer. 
 * Follow Particle's [instructions](https://setup.particle.io/) to set up your MCU and connect to your Wi-Fi network. 
+
+
+![](/images/Grove%20Shield%20Feather%20Case.stl)
 
 ### Grove MOSFET and 12V power source
 
