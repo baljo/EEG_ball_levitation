@@ -452,9 +452,9 @@ def map_class_to_blower_pwm(pred_class: int) -> int:
     - non_calm  -> 100 %   -> 255
     """
     if pred_class == CLASS_SLEEP:
-        return 0
+        return 250
     elif pred_class == CLASS_CALM:
-        return 128
+        return 253
     elif pred_class == CLASS_NON_CALM:
         return 255
     else:

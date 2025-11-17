@@ -1,5 +1,6 @@
 # Mind Blowing Brain Hack - Levitate a Ball with your thoughts!
 
+![](/images/Ping-Pong-ball.jpg)
 
 ## Overview
 
@@ -11,28 +12,20 @@ The goal is to turn mental activity into physical movement in a direct and intui
 
 This idea as such is not novel - there are earlier projects using entry level EEG-devices that in some cases even are marketed as toys. Personally I have also earlier published projects using the Muse EEG headband to control devices. What makes this project different though, is that it focuses on the biofeedback side with the aim for the user to target a balanced mental state. Furthermore, by using Edge Impulse, the model can easily be implemented and updated, even amended with more mental states.
 
+The project combines low-tech components like a blower and ping pong ball with high-tech components like an EEG-device and the Edge Impulse platform.
+
 ---
 
 ## Why This Matters
 
-### 1. A practical biofeedback tool
+### Mental awareness and mental fatigue
 
-Traditional neurofeedback relies on charts or sounds. This project replaces abstract feedback with a real physical object and a three level control scheme:
+Mental fatigue is a state that develops after sustained cognitive effort and can reduce performance, slow reaction times and alter EEG activity. Research shows that this state is often accompanied by increased frontal theta power and reductions in alpha activity, which reflect a shift toward lower alertness and reduced executive control (Wascher et al. 2014). Mental fatigue also affects self-regulation and increases vulnerability to performance drops, as discussed by Boksem and Tops (2008) and Pageaux et al. (2015).
 
-- eyes closed (0 %) pulls the ball down
-- calm (50 %) keeps it near the center
-- non calm (100 %) pushes it up
+Neurofeedback approaches aim to give users real-time information about their internal brain state so they can actively correct course. Studies on slow cortical potential neurofeedback (Drechsler et al. 2007; Strehl 2017) show that people can learn to modulate neural activity with simple, continuous feedback.
 
-The user’s task is to keep the ball hovering close to the middle. This means the system does not only reward maximum relaxation or maximum activation. Instead it trains the ability to find and maintain a balanced mental state that is alert but not stressed, relaxed but not drowsy. That is a more realistic target for everyday focus and performance.
+This project applies the same principle in a more accessible way: the user’s mental state controls the position of a levitating ball. Because the feedback is physical and immediate, users can more easily notice when they drift into low alertness (sleep class) or high tension (non calm) and work their way back to a balanced state (calm). This makes the system a practical tool for developing mental awareness and managing everyday cognitive fatigue, even though it is not a clinical device.
 
-### 2. Supports stress reduction and focus training
-
-The system can help users to practice relaxation, build sustained attention, and learn how internal states influence performance. This makes it relevant for wellness, mental health training, high performance environments and education.
-
-### 3. Foundation for hands free control
-
-The same architecture can scale to for example: assistive devices, hands free interfaces, robotics, game control, accessibility tools, and many others.
-This project shows that simple EEG patterns combined with edge ML can drive real world devices.
 
 ---
 
@@ -58,7 +51,7 @@ These characteristic spectral patterns are what allow the classifier to separate
 An Edge Impulse model classifies the window into one of three mental states: calm, sleep or non calm. The model is exported as a TFLite or Keras .h5 file and loaded by the Python script.
 
 #### 4. Real time control
-Inference runs every 200 ms. A class history buffer smooths predictions so that brief spikes do not cause sudden blower changes.  
+Inference runs every 500 ms. A class history buffer smooths predictions so that brief spikes do not cause sudden blower changes.  
 The predicted class maps to a PWM value between 0 and 255, sent over Wi-Fi to a Particle Photon 2 that drives a 12 V blower through a Grove MOSFET. The airflow lifts or lowers a ping pong ball in real time.
 
 ---
@@ -239,10 +232,10 @@ Wiring is extremely simple, no soldering needed if you use above hardware. Do no
 * Follow Particle's [instructions](https://setup.particle.io/) to set up your MCU and connect to your Wi-Fi network. 
 
 Optional:
-* From the `images`-folder you'll find a [3D-printable STL-file](/images/Grove%20Shield%20Feather%20Case.stl) as protective bottom for the shield. 
-* Print this in a flexible material like TPU so it's easy to bend it around the shield PCB.
+* From the `images`-folder you'll find a [3D-printable STL-file](/images/Grove%20Shield%20Feather%20Case.stl) as protective bottom for the Grove shield. 
+* Print this in a flexible material like TPU so it's easy to bend it around the shield's PCB.
 * The bottom has engraved text for each Grove port, this is to make them easier to find without the need of a magnifying glass.
-* Orient the bottom so the USB-port of your Photon 2 aligns with the engraved `USB`.
+* Orient the bottom, so the USB-port of your Photon 2 aligns with the engraved `USB`.
 
 
 ![](/images/Shield_bottom.png)
@@ -419,3 +412,24 @@ This project is open source and can be reused or modified for research, educatio
 ---
 
 
+### References
+
+- **Mental fatigue overview and costs**  
+  Boksem, M. A. S., & Tops, M. (2008). Mental fatigue: Costs and benefits. *Brain Research Reviews, 59(1), 125–139.*  
+  https://doi.org/10.1016/j.brainresrev.2008.07.001  
+
+- **Mental fatigue, self-regulation, and performance**  
+  Pageaux, B., Marcora, S. M., Rozand, V., & Lepers, R. (2015). Mental fatigue induced by prolonged self-regulation does not exacerbate central fatigue during subsequent whole-body endurance exercise. *Frontiers in Human Neuroscience, 9, 67.*  
+  https://doi.org/10.3389/fnhum.2015.00067  
+
+- **EEG markers of mental fatigue (frontal theta and alpha)**  
+  Wascher, E., Rasch, B., Sänger, J., Hoffmann, S., Schneider, D., Rinkenauer, G., Gutberlet, I., & Getzmann, S. (2014). Frontal theta activity reflects distinct aspects of mental fatigue. *Biological Psychology, 96, 57–65.*  
+  PubMed: https://pubmed.ncbi.nlm.nih.gov/24309160/  
+
+- **Neurofeedback of slow cortical potentials (SCP) as a treatment and training method**  
+  Drechsler, R., Straub, M., Doehnert, M., Heinrich, H., Steinhausen, H. C., & Brandeis, D. (2007). Controlled evaluation of a neurofeedback training of slow cortical potentials in children with attention-deficit/hyperactivity disorder (ADHD). *Behavioral and Brain Functions, 3, 35.*  
+  Full text: https://behavioralandbrainfunctions.biomedcentral.com/articles/10.1186/1744-9081-3-35  
+
+- **Review on SCP neurofeedback and mechanisms**  
+  Strehl, U. (2017). Slow cortical potentials neurofeedback in attention deficit hyperactivity disorder. *Frontiers in Human Neuroscience, 11, 135.*  
+  https://www.frontiersin.org/articles/10.3389/fnhum.2017.00135
