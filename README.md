@@ -3,13 +3,13 @@
 
 ## Overview
 
-While this project is neither *brain surgery* nor *rocket science*, it still involves using only your mind to get a ball flying!
+While this project is neither *brain surgery* nor *rocket science*, it still involves using only your mind to get a ball flying into the air!
 
 Jokes aside, the project demonstrates a physical biofeedback system where a user can levitate a ping pong ball by changing their mental state. A Muse EEG headset captures brain activity, which is processed through Edge Impulse spectral features and a custom three class model: calm, sleep and non calm. The output class determines the blower speed, and the ball rises or falls  in real time. 
 
 The goal is to turn mental activity into physical movement in a direct and intuitive way. This creates a new form of feedback that is engaging, easy to understand and suitable for training focus or calmness.
 
-This idea as such is not novel - there are earlier projects using entry level EEG-devices that in some cases are marketed as toys. Personally I have also earlier published projects using the Muse EEG headband to control devices. What makes this project different though, is that it focuses on the biofeedback side with the aim for the user to target a balanced mental state. Furthermore, by using Edge Impulse, the model can easily be implemented and updated, even amended with more mental states.
+This idea as such is not novel - there are earlier projects using entry level EEG-devices that in some cases even are marketed as toys. Personally I have also earlier published projects using the Muse EEG headband to control devices. What makes this project different though, is that it focuses on the biofeedback side with the aim for the user to target a balanced mental state. Furthermore, by using Edge Impulse, the model can easily be implemented and updated, even amended with more mental states.
 
 ---
 
@@ -36,13 +36,23 @@ This project shows that simple EEG patterns combined with edge ML can drive real
 
 ---
 
-## How it works
+## How it works conceptually
 
 #### 1. EEG input
 A Muse headset streams four EEG channels via BrainFlow. The program collects short overlapping windows for processing.
 
 #### 2. Feature generation
 Each window is converted into spectral features using Edge Impulse spectral analysis. The project also supports raw feature testing for validation.
+
+
+EEG activity is often described in frequency bands: theta (4–8 Hz), alpha (8–12 Hz), beta (13–30 Hz), and gamma (>30 Hz). The Edge Impulse model does not label these bands explicitly, but its FFT-based spectral features capture them automatically.
+
+* Sleep / eyes-closed → strong alpha increase (and some theta), which the model learns as the “sleep” class.
+* Calm → stable moderate alpha with lower beta activity.
+* Non-calm (blinks, facial movement, cognitive load) → spikes in beta/gamma or broadband energy increases.
+
+These characteristic spectral patterns are what allow the classifier to separate the three mental states.
+
 
 #### 3. ML prediction
 An Edge Impulse model classifies the window into one of three mental states: calm, sleep or non calm. The model is exported as a TFLite or Keras .h5 file and loaded by the Python script.
@@ -68,7 +78,7 @@ The predicted class maps to a PWM value between 0 and 255, sent over Wi-Fi to a 
 
 In this project a PC is used as an edge device, but it can easily be replaced with e.g. a Raspberry Pi or any other BLE-equipped device running Python and supported by Brainflow. With a Raspberry Pi you don't even need the Photon 2 as long as you can connect a MOSFET to it. And, if Python is not your cup of tea, Brainflow supports almost any modern language like Julia, Rust, C#, Swift, TypeScript, etc. Even some game engines are supported! 
 
-# INSTRUCTIONS
+# BUILD INSTRUCTIONS
 
 In this section you'll learn how to collect data, train and deploy a ML-model, connect the devices, and finally, let the ping pong ball levitate.
 
@@ -206,6 +216,16 @@ Here you'll verify how well your model performs on data it hasn't seen before, i
 
 ### Deploy the model
 
+Deploying the model for this project is very simple as you only need to download one file.
+
+- Select `Dashboard` from the menu
+- Scroll down until you find `TensorFlow lite (float32)`, and click on the download icon
+- This downloads an optimized model
+  - move it to the `src`-folder (where you have the Python-files)
+  - I recommend you rename it to a shorter name
+  - this is the file name you'll later need to update in your Python-program, see [this](https://github.com/baljo/EEG_ball_levitation?tab=readme-ov-file#selected-parameters) for more info
+
+![](/images/EI_018.png)
 
 ## Wiring
 
