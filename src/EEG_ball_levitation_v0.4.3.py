@@ -105,7 +105,7 @@ else:
 BOARD_ID = BoardIds.MUSE_2_BOARD.value
 FS = 256.0  # Hz
 WINDOW_SECONDS = 2.0  # window size in seconds
-STRIDE_SECONDS = 0.250  # stride between decisions
+STRIDE_SECONDS = 0.500  # stride between decisions
 
 # These are still used in the test modes (threshold-based target/ non-target)
 STABILITY_WINDOWS = 10  # (tests) number of last decisions to require stable target

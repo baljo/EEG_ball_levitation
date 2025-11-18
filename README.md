@@ -147,9 +147,11 @@ This step is about creating a import model via the CSV Wizard, and importing the
 
 ![](/images/EI_003.png)
 
+Note that the setting `Automatically split between training and testing` ensures approximately 20% of your data is put aside to be used for testing. Thus this data will not be used for training.
+
 Once the files are uploaded, you'll see the balance between the labels as well as the split between training and test data. If there's a huge discrepancy between the labels, you should record more data for the misrepresented labels to get a good balance. 
 
-Note that the setting `Automatically split between training and testing` ensures approximately 20% of your data is put aside to be used for testing. Thus this data will not be used for training.
+
 
 ![](/images/EI_004.png)
 
@@ -199,7 +201,7 @@ FFT takes those numbers and sorts them into frequency buckets, like this:*
 
 - Select `Spectral features` from the menu
 - Fill in the settings like in the screenshot below
-  - feel free to experiment with these later, it's however important to update the EEG-inferencing Python program accordingly
+  - feel free to experiment with these later, if you do so, you also need to update the EEG-inferencing Python program accordingly
 - Click `Save parameters`
 - On next page, click `Generate features`
   - Depending on the data amount and server load, this step typically takes a couple of minutes or so
@@ -351,7 +353,7 @@ The program works like this:
 - It runs inference against these processed features.
 - Finally, it sends a number 0-255 to the Photon 2. 
   - By default it averages the latest few inference results to provide a smoother user experience. Otherwise it might jump too frequently between the three states.
-- It prints continuosly inference results for testing and possible troubleshooting needs.
+- It continuosly prints inference results for testing and possible troubleshooting needs.
 
 #### Selected parameters
 
@@ -369,7 +371,7 @@ MODEL_H5 = "EEG_model_64.h5"
 ```
 FS = 256.0  # Hz
 WINDOW_SECONDS = 2.0  # window size in seconds
-STRIDE_SECONDS = 0.250  # stride between decisions
+STRIDE_SECONDS = 0.500  # stride between decisions
 ```
 
 **Smoothing and threshold settings:** These are used to average the inference results. The threshold 0.7 means that the ML-model needs to be at least 70% confident of a prediction for that prediction to be triggered.
@@ -383,7 +385,7 @@ TARGET_THRESHOLD = 0.7
 CLASS_HISTORY_WINDOWS = 8  # number of last predicted classes to majority-vote
 ```
 
-**Spectral features settings:** These needs to be identical as in the spectral features menu in EI. So, if you for example in EI Studio find out that a FFT length of 16 works better, you need to change `FFT_LENGTH`to 16 here. These parameters, together with the window size, ensure the input layer to your neural network will be same as in EI. It they aren't, you'll get a message like `...got 54, expected 36...`. 
+**Spectral features settings:** These needs to be identical as in the spectral features menu in EI. So, if you for example in EI Studio find out that a FFT length of 16 works better, you need to change `FFT_LENGTH` to 16 here. These parameters, together with the window size, ensure the input layer to your neural network will be same as in EI. It they aren't, you'll get a message like `...got 54, expected 36...`. 
 
 
 ```
@@ -453,9 +455,9 @@ While this project works as intended, there is of course room for adjustments or
 
 ### Ball not levitating very high?
 
-**Note:** The video is shot in a lightbox, and as the ceiling is quite low, it makes the ball oscillating more, and a few centimeters lower than in free air!
+**Note:** The video is shot in a lightbox, and as the ceiling of the box is quite low, the turbulence makes the ball oscillating more, and a few centimeters lower than in free air!
 
-Having said that, with 12V the blower is still a bit too weak to blow the ball very high. I have not tried to give it more oomph, but a reviewer mentioned they had run it with 20V. Not recommending it, but let me know if you've tried 😉
+Having said that, with 12V the blower is still a bit too weak to blow the ball very high. I have not tried to give it more oomph, but a reviewer mentioned they had run it with 20V. Not recommending it, but let me know if you've tried 😉.
 
 Another option is to find a blower with more power, or a lighter ball.
 
@@ -492,8 +494,15 @@ There is some research (Krigolson et al, Sidelinger et al, Beiramwand et al, Zha
 
 To change this, you can simple unselect eeg1 and eeg4 in Edge Impulse and retrain. In addition you also need to change the Python program slightly to accommodate for fewer channels. Feel free to experiment! 
 
-![](/images/Muse_frontal_electrodes.jpg)
+![](/images/Muse_frontal_electrodes_orig_compr.jpg)
 
+# What you've learned
+
+By following this project, you’ve learned how to capture real-time EEG data from a Muse headband, transform it into spectral features using Edge Impulse’s processing blocks, and classify mental states with an machine-learning model. You’ve also seen how these predictions can be used to control physical hardware, here driving a blower via a Particle Photon 2 to create a live biofeedback loop. Along the way, you gained practical experience in sensor integration, feature extraction, model deployment, and building an end-to-end ML-powered interactive system.
+
+Hopefully the project, while not for clinical use, has also given some ideas on how you can combine machine learning with biosensors, perhaps inventing next wearable device!
+
+---
 # License
 
 This project is open source and can be reused or modified for research, education or personal development.
