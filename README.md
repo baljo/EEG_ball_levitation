@@ -543,6 +543,7 @@ This concludes the project, by following it, you’ve learned how to capture rea
 Hopefully the project, while not for clinical use, has also given some ideas on how you can combine machine learning with biosensors, perhaps inventing your next wearable device!
 
 ---
+
 # License
 
 This project is open source and can be reused or modified for research, education or personal development.
