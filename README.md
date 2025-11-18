@@ -125,7 +125,7 @@ Start your Muse headset and wear it properly, it should **not** be connected to 
 
 ![](/images/Muse_in_use_compr.jpg)
 
-*The author captured in the wild*
+*The author and his EEG-device captured in the wild*
 
 ## Capture EEG-data for Edge Impulse
 
@@ -306,7 +306,7 @@ Optional:
 * Orient the bottom, so the USB-port of your Photon 2 aligns with the engraved `USB`.
 
 
-![](/images/Shield_bottom.png)
+![](/images//Shield_bottom_both.png)
 
 ### Grove MOSFET and 12V power source
 
