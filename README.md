@@ -51,8 +51,8 @@ Neurofeedback approaches aim to give users real-time information about their int
 
 This project applies the same principle in a more accessible way: the user’s mental state controls the position of a levitating ball. Because the feedback is physical and immediate, users can more easily notice when they drift into low alertness (sleep class) or high tension (non calm) and work their way back to a balanced state (calm). This makes the system a practical tool for developing mental awareness and managing everyday cognitive fatigue, even though it is not a clinical device.
 
-![](/images/State_change.png)
-
+![Illustrative picture](/images/State_change.png)
+*Illustrative picture*
 
 ---
 
