@@ -124,6 +124,7 @@ Clone the repository, decide on if you want to install it directly on your devic
 Start your Muse headset and wear it properly, it should **not** be connected to your phone or other device in this project.
 
 ![](/images/Muse_in_use_compr.jpg)
+
 *The author captured in the wild*
 
 ## Capture EEG-data for Edge Impulse
