@@ -12,9 +12,31 @@ The goal is to turn mental activity into physical movement in a direct and intui
 
 This idea as such is not novel - there are earlier projects using entry level EEG-devices that in some cases even are marketed as toys. Personally I have also earlier published projects using the Muse EEG headband to control devices. What makes this project different though, is that it focuses on the biofeedback side with the aim for the user to target a balanced mental state. Furthermore, by using Edge Impulse, the model can easily be implemented and updated, even amended with more mental states.
 
-The project combines low-tech components like a blower and ping pong ball with high-tech components like an EEG-device and the Edge Impulse platform.
+The project combines low-tech components, like a blower and ping pong ball, with high-tech components like an EEG-device and the Edge Impulse platform.
 
 ![](/images/Final_video.gif)
+---
+## Table of contents
+- [Overview](#overview)  
+- [Why this matters](#why-this-matters)  
+- [How it works conceptually](#how-it-works-conceptually)  
+- [Hardware needed](#hardware-needed)  
+- [Build instructions](#build-instructions)  
+  - [Install Python programs](#install-python-programs)  
+  - [Set up your Muse EEG device](#set-up-your-muse-eeg-device)  
+  - [Capture EEG-data for Edge Impulse](#capture-eeg-data-for-edge-impulse)  
+  - [Build a model with Edge Impulse Studio](#build-a-model-with-edge-impulse-studio)  
+  - [Wiring](#wiring)  
+  - [Install the Photon 2 program controlling the blower](#install-the-photon-2-program-controlling-the-blower)  
+  - [Start the main program and levitate!](#start-the-main-program-and-levitate)  
+  - [Other programs](#other-programs)  
+- [Further suggestions](#further-suggestions)  
+  - [Hardware aspects](#hardware-aspects)  
+  - [ML-model aspects](#ml-model-aspects)  
+- [What you've learned](#what-youve-learned)  
+- [License](#license)  
+- [References](#references)  
+
 ---
 
 ## Why This Matters
