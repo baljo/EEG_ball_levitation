@@ -45,9 +45,13 @@ The project combines low-tech components, like a blower and ping pong ball, with
 
 Mental fatigue is a state that develops after sustained cognitive effort and can reduce performance, slow reaction times and alter EEG activity. Research shows that this state is often accompanied by increased frontal theta power and reductions in alpha activity, which reflect a shift toward lower alertness and reduced executive control (Wascher et al. 2014). Mental fatigue also affects self-regulation and increases vulnerability to performance drops, as discussed by Boksem and Tops (2008) and Pageaux et al. (2015).
 
+
+
 Neurofeedback approaches aim to give users real-time information about their internal brain state so they can actively correct course. Studies on slow cortical potential neurofeedback (Drechsler et al. 2007; Strehl 2017) show that people can learn to modulate neural activity with simple, continuous feedback.
 
 This project applies the same principle in a more accessible way: the user’s mental state controls the position of a levitating ball. Because the feedback is physical and immediate, users can more easily notice when they drift into low alertness (sleep class) or high tension (non calm) and work their way back to a balanced state (calm). This makes the system a practical tool for developing mental awareness and managing everyday cognitive fatigue, even though it is not a clinical device.
+
+![](/images/State_change.png)
 
 
 ---
