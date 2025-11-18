@@ -455,6 +455,8 @@ There is some research (Krigolson et al, Sidelinger et al, Beiramwand et al, Zha
 
 To change this, you can simple unselect eeg1 and eeg4 in Edge Impulse and retrain. In addition you also need to change the Python program slightly to accommodate for fewer channels. Feel free to experiment! 
 
+![](/images/Muse_frontal_electrodes.jpg)
+
 # License
 
 This project is open source and can be reused or modified for research, education or personal development.
