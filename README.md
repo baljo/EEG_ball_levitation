@@ -497,20 +497,20 @@ While this project works as intended, there is of course room for adjustments or
 
 **Note:** The video is shot in a lightbox, and as the ceiling of the box is quite low, the turbulence makes the ball oscillating more, and a few centimeters lower than in free air!
 
-Having said that, with 12V the blower is still a bit too weak to blow the ball very high. I have not tried to give it more oomph, but a reviewer mentioned they had run it with 20V. Not recommending it, but let me know if you've tried 😉.
+Having said that, with 12V the blower is still a bit too weak to blow the ball very high. I have not tried to give it more oomph, but a reviewer mentioned they had run it with 20V. Not recommending it, but let me know the results if you try 😉.
 
 Another option is to find a blower with more power, or a lighter ball.
 
 ### Ball oscillating?
 
-As you see in the top video, the ball is oscillating. It does this even in free air, though a bit less. To mitigate this, I used a short and light piece of yarn to keep the ball aligned better vertically.
+As the first video at the beginning of this tutorial shows, the ball is oscillating. It oscillates even in free air, though a bit less. To mitigate this, I used a short and light piece of yarn to keep the ball aligned better vertically.
 I had also considered 3D-printing some type of funnel or similar to possibly increase the ball altitude of the ball, but this would need a lot of designing, printing, and testing.
 
 ![](/images/Final_video_yarn.gif)
 
 ### I don't want to use a computer!
 
-As mentioned earlier, the computer, and even the Photon 2, can be replaced with a device supporting BrainFlow and BLE. This can e.g. be a Raspberry, but there are other candidates as well that are expected to work as BrainFlow is a quite versatile platform. 
+As mentioned earlier, the computer, and even the Photon 2, can be replaced with a device supporting BrainFlow and BLE. This can e.g. be a Raspberry, but there are other candidates as well that are expected to work as BrainFlow is a quite versatile platform, end Edge Impulse even more so.
 
 ## ML-model aspects
 
@@ -530,7 +530,7 @@ I found two reasons for this behavior:
 
 ## Use only frontal electrodes
 
-There is some research (Krigolson et al, Sidelinger et al, Beiramwand et al, Zhang et al) indicating that frontal/prefrontal channels can capture meaningful cognitive signals such as alpha activity and workload-related change. This means in practice that you *might* get better performance by only using data from the channels eeg2 and eeg3 as these map to AF7 (left frontal) and AF8 (right frontal). Right now all four channels are used, possible providing data not of importance for measuring mental state.
+There is some research - Krigolson et al (2017), Sidelinger et al (2023), Beiramwand et al (2024), Zhang et al (2022) - indicating that frontal/prefrontal channels can capture meaningful cognitive signals such as alpha activity and workload-related change. This means in practice that you *might* get better performance by only using data from the channels eeg2 and eeg3 as these map to AF7 (left frontal) and AF8 (right frontal). Right now all four channels are used, possible providing data not of importance for measuring mental state.
 
 To change this, you can simply unselect eeg1 and eeg4 in Edge Impulse and retrain. In addition you also need to change the Python program slightly to accommodate for fewer channels. Feel free to experiment! 
 
