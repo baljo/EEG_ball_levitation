@@ -69,7 +69,7 @@ EEG activity is often described in frequency bands: theta (4–8 Hz), alpha (8�
 
 These characteristic spectral patterns are what allow the classifier to separate the three mental states.
 
-This picture shows data from the four EEG-channels (electrodes). As you might understand, it's not really possible to know what they represent just by looking at the data.
+*This picture shows data from the four EEG-channels (electrodes). As you might understand, it's not really possible to know what they represent just by looking at the data.*
 
 ![](/images/EI_002.png)
 
@@ -80,6 +80,8 @@ An Edge Impulse model classifies the window into one of three mental states: cal
 #### 4. Real time control
 Inference runs every 500 ms. A class history buffer smooths predictions so that brief spikes do not cause sudden blower changes.  
 The predicted class maps to a PWM value between 0 and 255, sent over Wi-Fi to a Particle Photon 2 that drives a 12 V blower through a Grove MOSFET. The airflow lifts or lowers a ping pong ball in real time.
+
+The levitating ping-pong ball also demonstrates **Bernoulli’s principle**: the fast-moving air from the blower creates a region of lower pressure around the ball, while the surrounding slower air produces higher pressure that keeps the ball centered and suspended.
 
 ---
 
