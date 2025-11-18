@@ -300,13 +300,19 @@ Wiring is extremely simple, no soldering needed if you use the recommended hardw
 ![](/images/Photon2.jpg)
 
 Optional:
-* From the `images`-folder you'll find a [3D-printable STL-file](/images/Grove%20Shield%20Feather%20Case.stl) as protective bottom for the Grove shield. 
-* Print this in a flexible material like TPU so it's easy to bend it around the shield's PCB.
-* The bottom has engraved text for each Grove port, this is to make them easier to find without the need of a magnifying glass.
-* Orient the bottom, so the USB-port of your Photon 2 aligns with the engraved `USB`.
-
+- From the `images`-folder you'll find a [3D-printable STL-file](/images/Grove%20Shield%20Feather%20Case.stl) as protective bottom for the Grove shield. 
+  - Print this in a flexible material like TPU so it's easy to bend it around the shield's PCB.
+  - The bottom has engraved text for each Grove port, this is to make them easier to find without the need of a magnifying glass.
+  - Orient the bottom, so the USB-port of your Photon 2 aligns with the engraved `USB`.
 
 ![](/images//Shield_bottom_both.png)
+
+- Foam, cardboard, wood, or any other material to which you can mount the blower. Even better is to design and 3D-print a case.
+  - I used double-sided tape to attach the blower to the foam.
+
+
+
+![](/images/Blower_fan_mount_compr.jpg)
 
 ### Grove MOSFET and 12V power source
 
@@ -317,6 +323,10 @@ Optional:
 * Connect the blower's black (-) wire to GND on Grove out
 
 ![](/images/MOSFET.jpg)
+
+### Mount
+
+
 
 ### Muse 2
 * No wiring needed, (or even possible!), but set up the device according to the instructions. Remember that it can only stream to one device at a time, so don't have it connected to your phone while streaming EEG-data for this project.
