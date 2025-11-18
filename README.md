@@ -308,6 +308,8 @@ Once you are ready:
 
 ➨➤ If everything works alright, the blower should start reacting to your mental state!
 
+![](/images/Ping-Pong-ball_compr.jpg)
+
 
 ### How it works
 
