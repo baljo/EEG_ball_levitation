@@ -47,6 +47,8 @@ EEG activity is often described in frequency bands: theta (4â€“8 Hz), alpha (8â€
 
 These characteristic spectral patterns are what allow the classifier to separate the three mental states.
 
+![](/images/EI_002.png)
+
 
 #### 3. ML prediction
 An Edge Impulse model classifies the window into one of three mental states: calm, sleep or non calm. The model is exported as a TFLite or Keras .h5 file and loaded by the Python script.
