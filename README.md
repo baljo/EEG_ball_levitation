@@ -47,6 +47,8 @@ EEG activity is often described in frequency bands: theta (4–8 Hz), alpha (8�
 
 These characteristic spectral patterns are what allow the classifier to separate the three mental states.
 
+This picture shows data from the four EEG-channels (electrodes). As you might understand, it's not really possible to know what they represent just by looking at the data.
+
 ![](/images/EI_002.png)
 
 
@@ -77,7 +79,7 @@ Optional:
 * Powerbank (only if you want the Photon 2 to be stand-alone and not connected to your computer)
 * 3D-printer, if you want to print a protective case for the Grove Shield, or a stand for the blower
 
-In this project a PC is used as an edge device, but it can easily be replaced with e.g. a Raspberry Pi or any other BLE-equipped device running Python and supported by Brainflow. With a Raspberry Pi you don't even need the Photon 2 as long as you can connect a MOSFET to it. And, if Python is not your cup of tea, Brainflow supports almost any modern language like Julia, Rust, C#, Swift, TypeScript, etc. Even some game engines are supported! 
+In this project a PC is used as an edge device, but it can easily be replaced with e.g. a Raspberry Pi or any other BLE-equipped device running Python, and supported by Brainflow. With a Raspberry Pi you don't even need the Photon 2 as long as you can connect a MOSFET to it. And, if Python is not your cup of tea, Brainflow supports almost any modern language like Julia, Rust, C#, Swift, TypeScript, etc. Even some game engines are supported! 
 
 # BUILD INSTRUCTIONS
 
@@ -109,7 +111,7 @@ LABEL = "non_calm.high_load"    # change between runs: "calm", "non_calm", "slee
 DURATION_SEC = 20               # how long to record this label
 OUTPUT_DIR = "data"             # folder for CSV files
 ```
-- Set `LABEL` to the label you want to use in Edge Impulse. When importing data where the file name will represent the label, only the part before the first dot (.) will be used, so in above example the final label = `non_calm`. In the example below, I wanted to add a note indicating this file included data when I had a high cognitive load. This in case I want to use this explicit sample later on.
+- Set `LABEL` to the label you want to use in Edge Impulse. When importing data where the file name will represent the label, only the part before the first dot (.) will be used, so in above example the final label = `non_calm`. In the example, I also wanted to add a note "high_load" indicating this file included data when I had a high cognitive load. This in case I want to use this explicit sample later on.
   - To avoid the need to rename files later, always add a dot (.) after the label, even if you don't add something else!
 - Set `DURATION_SEC` to how long you want the sample to be. 20-30 seconds is good to start with. Only when having your eyes closed and relaxing, it's easy to have 1-3 minutes or so.
 - `OUTPUT_DIR` is used if you want your data to reside in a subfolder (recommended).
@@ -122,7 +124,7 @@ OUTPUT_DIR = "data"             # folder for CSV files
 - "Perform" the action, feel free to experiment with different actions as long as they are distinctive. Here the ones I used:
   - *sleep* = keep your eyes closed and relax without moving (avoid falling asleep though :-D)
   - *calm* = eyes open, relax without moving, avoid blinking if possible
-  - *non_calm* = eyes open, blink and moving ok. You can also experiment with high cognitive load in this state, e.g. count down from 100 to 0 with 7 (93, 86, 79...) 
+  - *non_calm* = eyes open, blink and moving ok. You can also experiment with high cognitive load in this state, e.g. count down from 100 to 0 by 7 (93, 86, 79...) 
 - Keep same label, or change it when ready to move to next one, rinse and repeat.
   - Try to collect roughly same amount of data for each label.
 
@@ -145,7 +147,9 @@ This step is about creating a import model via the CSV Wizard, and importing the
 
 ![](/images/EI_003.png)
 
-Once the files are uploaded you'll see the balance between the labels as well as the split between training and test data. If there's a huge discrepancy between the labels, you should record more data for the misrepresented labels to get a good balance. 
+Once the files are uploaded, you'll see the balance between the labels as well as the split between training and test data. If there's a huge discrepancy between the labels, you should record more data for the misrepresented labels to get a good balance. 
+
+Note that the setting `Automatically split between training and testing` ensures approximately 20% of your data is put aside to be used for testing. Thus this data will not be used for training.
 
 ![](/images/EI_004.png)
 
@@ -155,20 +159,43 @@ In this step you'll set up data processing and learning blocks.
 
 - Select `Create impulse` from the menu
 - Set up the time series data like in the picture
-  - Window size = 2000 ms
-  - Window increase = 500 ms
-  - Frequency 256 Hz
-  - Checkmark Zero-pad data (= shorter samples than the window size will be filled with zeroes at the end)
+  - Window size = 2000 ms (2 seconds)
+  - Window increase = 500 ms (0.5 second)
+  - Frequency 256 Hz (that's the frequency of most Muse devices)
+  - Checkmark Zero-pad data (= shorter samples than the window size will be filled with zeroes at the end). 
+    - This is mostly fine when you record longer samples (approx. 20 seconds or more at a time with window size 2 seconds ) as the zeroes will be filled in for only 10% of the samples. 
+    - If "too many" samples have zeroes at the end, there's however a risk that the ML-model learns that the zeroes are meaningful (they aren't). In that case you might want to experiment with this option not selected.
 - Select `Spectral Analysis` as processing block and ensure all four axes are selected
 - Select 'Classification` as learning block and ensure spectral features is selected
 - You should now see all three labels as output features
 - Click `Save Impulse`
 
+
 ![](/images/EI_006.png)
 
 ### Configure spectral features
 
-Here you'll configure FFT-settings ([Fast Fourier Transform](https://en.wikipedia.org/wiki/Fast_Fourier_transform)), and generate features.
+Here you'll configure FFT-settings ([Fast Fourier Transform](https://en.wikipedia.org/wiki/Fast_Fourier_transform)), and generate features. 
+
+---
+A Fourier transform can in layman terms be described like this:
+
+*Think of a signal (like an EEG or sound wave) as a long row of thousands of numbers over time. 
+FFT takes those numbers and sorts them into frequency buckets, like this:*
+
+- *Bucket 1 → very low frequencies*
+
+- *Bucket 2 → slightly higher frequencies*
+
+- *Bucket 3 → medium frequencies*
+
+- *Bucket N → very high frequencies*
+
+*Each bucket answers the question:
+“How much of this specific frequency is present in the signal?”*
+
+
+---
 
 - Select `Spectral features` from the menu
 - Fill in the settings like in the screenshot below
@@ -185,7 +212,7 @@ Here you'll configure FFT-settings ([Fast Fourier Transform](https://en.wikipedi
 Here you'll start to see some first results of your work!
 
 - Select `Classifier` from the menu
-- Try first with same settings as in the screenshot, this is though an iterative process, so feel free to change settings if you find the model is not performing well.
+- Try first with same settings as in the screenshot, this is though an iterative process, so feel free to change settings if you find that your model is not performing well.
 - Click `Save & train`
   - You'll see the progress in the upper right window
   - This is the step that typically consumes most time, from a few minutes up to several hours. With a few minutes of data, and with these settings, the training should be ready in under 10 minutes.
@@ -201,10 +228,10 @@ If the accuracy is very low, the root cause is most often on the data side, or o
 - The visual explorer in the bottom right corner is in these cases probably showing that the data clusters are mostly overlapping each other.
 - First verify that you have roughly same amount of data for each label
 - Try to verify that the uploaded data is really representing respective label.
-    - If this would a computer vision project, you'd verify that photos using the label 'cat' indeed are of cats and not dogs or zebras.
-    - With EEG-data it's however nearly impossible to look at the data to be able to confirm it. Only data samples with e.g. eye blinks, jaw clenches or similar are shown as spikes.
+    - If this would be a computer vision project, you'd verify that photos using the label 'cat' indeed are of cats and not of dogs or zebras.
+    - With EEG-data it's however nearly impossible to look at the data to be able to confirm it. Only data samples with e.g. eye blinks, jaw clenches or similar might have visible spikes in them.
 - Building ML-models is an iterative process, even more so for this type of EEG-project. Thus, I recommend that you initially collect a smaller amount of data, train and test the model. 
-- If you already in the beginning notice poor accuracy, you might consider deleting or inactivating the uploaded samples and record new data. Once you have a good base, you can consider collecting more and more diverse data.
+- If you already in the beginning notice poor accuracy, you might consider deleting or deactivating the uploaded samples and record new data. Once you have a good base, you can continue collecting more and more diverse data.
 
 
 ### Test the model
@@ -222,7 +249,7 @@ Here you'll verify how well your model performs on data it hasn't seen before, i
 Deploying the model for this project is very simple as you only need to download one file.
 
 - Select `Dashboard` from the menu
-- Scroll down until you find `TensorFlow lite (float32)`, and click on the download icon
+- Scroll down until you find `TensorFlow lite (float32)`, and click on the download icon.
 - This downloads an optimized model
   - move it to the `src`-folder (where you have the Python-files)
   - I recommend you rename it to a shorter name
