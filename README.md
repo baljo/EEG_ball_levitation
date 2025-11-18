@@ -500,7 +500,7 @@ I had also considered 3D-printing some type of funnel or similar to possibly inc
 
 ### I don't want to use a computer!
 
-As mentioned earlier, the computer, and even Photon 2, can be replaced with a device supporting Brainflow and BLE. This can e.g. be a Raspberry, but there are other candidates as well that are expected to work. 
+As mentioned earlier, the computer, and even the Photon 2, can be replaced with a device supporting Brainflow and BLE. This can e.g. be a Raspberry, but there are other candidates as well that are expected to work as Brainflow is a quite versatile platform. 
 
 ## ML-model aspects
 
