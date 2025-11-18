@@ -307,7 +307,7 @@ Optional:
 
 ![](/images//Shield_bottom_both.png)
 
-- Foam, cardboard, wood, or any other material to which you can mount the blower. Even better is to design and 3D-print a case.
+- Foam, cardboard, wood, or any other material to which you can mount the blower. This particular blower has a round bottom and twitches easily when it starts, that's why you should attach it to a structure. Even better is to design and 3D-print a case.
   - I used double-sided tape to attach the blower to the foam.
 
 
