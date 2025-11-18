@@ -6,9 +6,9 @@
 
 While this project is neither *brain surgery* nor *rocket science*, it still involves using only your mind to get a ball flying into the air!
 
-Jokes aside, the project demonstrates a physical biofeedback system where a user can levitate a ping pong ball by changing their mental state. A Muse EEG headset captures brain activity, which is processed through Edge Impulse spectral features and a custom three class model: calm, sleep and non calm. The output class determines the blower speed, and the ball rises or falls  in real time. 
+Jokes aside, the project demonstrates a physical biofeedback system where you can levitate a ping pong ball by changing your mental state. A Muse EEG headset captures brain activity, which is processed through Edge Impulse spectral features and a custom three class model: calm, sleep and non calm. The output class determines the blower speed, and the ball rises or falls  in real time. 
 
-The goal is to turn mental activity into physical movement in a direct and intuitive way. This creates a new form of feedback that is engaging, easy to understand and suitable for training focus or calmness.
+The goal is to turn your mental activity into physical movement in a direct and intuitive way. This creates a new form of feedback that is engaging, easy to understand and suitable for training focus or calmness.
 
 This idea as such is not novel - there are earlier projects using entry level EEG devices that in some cases even are marketed as toys. Personally I have also previously published projects using the Muse EEG headband to control devices. What makes this project different though, is that it focuses on the biofeedback side with the aim for the user to target a balanced mental state. Furthermore, by using Edge Impulse, the model can easily be implemented and updated, even amended with more mental states.
 
