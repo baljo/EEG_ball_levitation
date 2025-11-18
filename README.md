@@ -91,6 +91,8 @@ Clone the repository, decide on if you want to install it directly on your devic
 
 Start your Muse headset and wear it properly, it should **not** be connected to your phone or other device in this project.
 
+![](/images/Muse_in_use_compr.jpg)
+
 ## Capture EEG-data for Edge Impulse
 
 In this chapter you'll learn how to collect data for Edge Impulse.
@@ -228,7 +230,7 @@ Deploying the model for this project is very simple as you only need to download
 
 ## Wiring
 
-Wiring is extremely simple, no soldering needed if you use above hardware. Do note that you can choose to have your Photon 2 connected to your computer and communicate through a serial port, or you can have it as a standalone device and communicate through Wi-Fi.
+Wiring is extremely simple, no soldering needed if you use the recommended hardware. Do note that you can choose to have your Photon 2 connected to your computer and communicate through a serial port, or you can have it as a standalone device and communicate through Wi-Fi.
 
 ### Photon 2
 * Plug your Photon 2 into the Grove Shield. Power it via a micro-USB cable connected to your computer. 
@@ -267,7 +269,7 @@ Upload the [program](/src/levitate-ball-v0-1.ino) to your Photon 2. As the progr
 The program is very straightforward:
 - It sets up a web server listening at port 9000
 - It's waiting for a number between 0-255 (in ASCII-form) through the serial port, or via Wi-Fi.
-- When a nubmer is received, it sets the blower speed accordingly. 
+- When a number is received, it sets the blower speed accordingly. 
 - If a number has not been received the latest 30 seconds, it stops the blower. 
   - This is to cover e.g. for situations when the sending program has been stopped, and you want the blower to stop without having to unpower the blower.
 - If you connect the Photon 2 directly to your computer, you can, using a serial monitor, test the blower manually by transmitting a number 0-255.
@@ -416,13 +418,13 @@ There are a few other Python programs, versions, and files in the [src folder](/
 
 While this project works as intended, there is of course room for adjustments or improvements.
 
-## Physical aspects
+## Hardware aspects
 
 ### Ball not levitating very high?
 
 **Note:** The video is shot in a lightbox, and as the ceiling is quite low, it makes the ball oscillating more, and a few centimeters lower than in free air!
 
-Having said that, With 12V the blower is still a bit too weak to blow the ball very high. I have not tried to give it more oomph, but a reviewer mentioned they had run it with 20V. Not recommending it, but let me know if you've tried 😉
+Having said that, with 12V the blower is still a bit too weak to blow the ball very high. I have not tried to give it more oomph, but a reviewer mentioned they had run it with 20V. Not recommending it, but let me know if you've tried 😉
 
 Another option is to find a blower with more power, or a lighter ball.
 
@@ -432,6 +434,10 @@ As you see in the top video, the ball is oscillating. It does this even in free 
 I had also considered 3D-printing some type of funnel or similar to possibly increase the ball altitude of the ball, but this would need a lot of designing, printing, and testing.
 
 ![](/images/Final_video_yarn.gif)
+
+### I don't want to use a computer!
+
+As mentioned earlier, the computer, and even Photon 2, can be replaced with a device supporting Brainflow and BLE. This can e.g. be a Raspberry, but there are other candidates as well that are expected to work. 
 
 ## ML-model aspects
 
