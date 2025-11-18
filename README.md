@@ -10,9 +10,9 @@ Jokes aside, the project demonstrates a physical biofeedback system where a user
 
 The goal is to turn mental activity into physical movement in a direct and intuitive way. This creates a new form of feedback that is engaging, easy to understand and suitable for training focus or calmness.
 
-This idea as such is not novel - there are earlier projects using entry level EEG-devices that in some cases even are marketed as toys. Personally I have also earlier published projects using the Muse EEG headband to control devices. What makes this project different though, is that it focuses on the biofeedback side with the aim for the user to target a balanced mental state. Furthermore, by using Edge Impulse, the model can easily be implemented and updated, even amended with more mental states.
+This idea as such is not novel - there are earlier projects using entry level EEG devices that in some cases even are marketed as toys. Personally I have also previously published projects using the Muse EEG headband to control devices. What makes this project different though, is that it focuses on the biofeedback side with the aim for the user to target a balanced mental state. Furthermore, by using Edge Impulse, the model can easily be implemented and updated, even amended with more mental states.
 
-The project combines low-tech components, like a blower and ping pong ball, with high-tech components like an EEG-device and the Edge Impulse platform.
+The project combines low-tech components, like a blower and ping pong ball, with high-tech components like an EEG device and the Edge Impulse platform.
 
 ![](/images/Final_video.gif)
 ---
@@ -81,9 +81,9 @@ These characteristic spectral patterns are what allow the classifier to separate
 #### 3. ML prediction
 An Edge Impulse model classifies the window into one of three mental states: calm, sleep or non calm. The model is exported as a TFLite or Keras .h5 file and loaded by the Python script.
 
-#### 4. Real time control
+#### 4. Real-time control
 Inference runs every 500 ms. A class history buffer smooths predictions so that brief spikes do not cause sudden blower changes.  
-The predicted class maps to a PWM value between 0 and 255, sent over Wi-Fi to a Particle Photon 2 that drives a 12 V blower through a Grove MOSFET. The airflow lifts or lowers a ping pong ball in real time.
+The predicted class maps to a PWM value between 0 and 255, sent over Wi-Fi to a Particle Photon 2 that drives a 12V blower through a Grove MOSFET. The airflow lifts or lowers a ping pong ball in real time.
 
 The levitating ping-pong ball also demonstrates **Bernoulli’s principle**: the fast-moving air from the blower creates a region of lower pressure around the ball, while the surrounding slower air produces higher pressure that keeps the ball centered and suspended.
 
@@ -97,17 +97,17 @@ The levitating ping-pong ball also demonstrates **Bernoulli’s principle**: the
 * [Particle Photon 2](https://store.particle.io/products/photon-2?srsltid=AfmBOoqq1V3DIss33WjENd1w0_bLUDX-0jrmhQs3YINJkUIqyJ5eP8fq) (or any other MCU supporting Wi-Fi and/or serial connection)
 * [Grove Shield for Particle Mesh](https://www.seeedstudio.com/Grove-Shield-for-Particle-Mesh-p-4080.html?srsltid=AfmBOootJoz0kHWhe1_mkOXSAPDkXbr2qgLGuEO5VhwbfaTIpUZ2rS7F) - this is if you want to use the Grove ecosystem and cables
 * [Grove MOSFET for Arduino](https://www.seeedstudio.com/Grove-MOSFET.html) - can be substituted with another suitable MOSFET
-* [12 V blower fan](https://www.sparkfun.com/blower-squirrel-cage-12v.html)
+* [12V blower fan](https://www.sparkfun.com/blower-squirrel-cage-12v.html)
 * Ping Pong ball
-* 12 V power source (wall adapter or battery)
+* 12V power source (wall adapter or battery)
 
 ![](/images/Hardware.png)
 
 Optional:
-* Powerbank (only if you want the Photon 2 to be stand-alone and not connected to your computer)
+* Power bank (only if you want the Photon 2 to be stand-alone and not connected to your computer)
 * 3D-printer, if you want to print a protective case for the Grove Shield, or a stand for the blower
 
-In this project a PC is used as an edge device, but it can easily be replaced with e.g. a Raspberry Pi or any other BLE-equipped device running Python, and supported by Brainflow. With a Raspberry Pi you don't even need the Photon 2 as long as you can connect a MOSFET to it. And, if Python is not your cup of tea, Brainflow supports almost any modern language like Julia, Rust, C#, Swift, TypeScript, etc. Even some game engines are supported! 
+In this project a PC is used as an edge device, but it can easily be replaced with e.g. a Raspberry Pi or any other BLE-equipped device running Python, and supported by BrainFlow. With a Raspberry Pi you don't even need the Photon 2 as long as you can connect a MOSFET to it. And, if Python is not your cup of tea, BrainFlow supports almost any modern language like Julia, Rust, C#, Swift, TypeScript, etc. Even some game engines are supported! 
 
 # BUILD INSTRUCTIONS
 
@@ -117,7 +117,7 @@ In this section you'll learn how to collect data, train and deploy a ML-model, c
 
 You'll basically only need two Python programs, one for capturing data to be imported into Edge Impulse, another for inferencing and sending signals to the blower. While these programs of course could be combined, and controlled via parameters, or a menu, it's often easier to keep completely different modules separated.
 
-Clone the repository, decide on if you want to install it directly on your device, or in a virtual environment. Then open a command prompt and run `pip install -r requirements.txt`. This will install all needed libraries to the selected environment.
+Clone the repository, decide whether you want to install it directly on your device, or in a virtual environment. Then open a command prompt and run `pip install -r requirements.txt`. This will install all needed libraries to the selected environment.
 
 ## Set up your Muse EEG device
 
@@ -125,7 +125,7 @@ Start your Muse headset and wear it properly, it should **not** be connected to 
 
 ![](/images/Muse_in_use_compr.jpg)
 
-*The author and his EEG-device captured in the wild*
+*The author and his EEG device captured in the wild*
 
 ## Capture EEG-data for Edge Impulse
 
@@ -155,7 +155,7 @@ OUTPUT_DIR = "data"             # folder for CSV files
   - *sleep* = keep your eyes closed and relax without moving (avoid falling asleep though :-D)
   - *calm* = eyes open, relax without moving, avoid blinking if possible
   - *non_calm* = eyes open, blink and moving ok. You can also experiment with high cognitive load in this state, e.g. count down from 100 to 0 by 7 (93, 86, 79...) 
-- Keep same label, or change it when ready to move to next one, rinse and repeat.
+- Keep the same label, or change it when ready to move to next one, rinse and repeat.
   - Try to collect roughly same amount of data for each label.
 
 ## Build a model with Edge Impulse Studio
@@ -165,7 +165,7 @@ A prerequisite for the following steps is that you have created an EI account (f
 
 ### Import data
 
-This step is about creating a import model via the CSV Wizard, and importing the sample files. If you've not used the CSV Wizard before, why not take a look at the [documentation](https://docs.edgeimpulse.com/studio/projects/data-acquisition/csv-wizard#csv-wizard).
+This step is about creating an import model via the CSV Wizard, and importing the sample files. If you've not used the CSV Wizard before, why not take a look at the [documentation](https://docs.edgeimpulse.com/studio/projects/data-acquisition/csv-wizard#csv-wizard).
 
 - Select `Data acquisition` from the menu
 - Click on `CSV Wizard`, upload one of your recorded CSV-files, and use following settings:
@@ -179,7 +179,7 @@ This step is about creating a import model via the CSV Wizard, and importing the
 
 Note that the setting `Automatically split between training and testing` ensures approximately 20% of your data is put aside to be used for testing. Thus this data will not be used for training.
 
-Once the files are uploaded, you'll see the balance between the labels as well as the split between training and test data. If there's a huge discrepancy between the labels, you should record more data for the misrepresented labels to get a good balance. 
+Once the files are uploaded, you'll see the balance between the labels as well as the split between training and test data. If there's a huge discrepancy between the labels, you should record more data for the underrepresented labels to get a good balance. 
 
 
 
@@ -195,7 +195,7 @@ In this step you'll set up data processing and learning blocks.
   - Window increase = 500 ms (0.5 second)
   - Frequency 256 Hz (that's the frequency of most Muse devices)
   - Checkmark Zero-pad data (= shorter samples than the window size will be filled with zeroes at the end). 
-    - This is mostly fine when you record longer samples (approx. 20 seconds or more at a time with window size 2 seconds ) as the zeroes will be filled in for only 10% of the samples. 
+    - This is mostly fine when you record longer samples (approx. 20 seconds or more at a time with window size 2 seconds) as the zeroes will be filled in for only 10% of the samples. 
     - If "too many" samples have zeroes at the end, there's however a risk that the ML-model learns that the zeroes are meaningful (they aren't). In that case you might want to experiment with this option not selected.
 - Select `Spectral Analysis` as processing block and ensure all four axes are selected
 - Select 'Classification` as learning block and ensure spectral features is selected
@@ -250,7 +250,7 @@ Here you'll start to see some first results of your work!
   - This is the step that typically consumes most time, from a few minutes up to several hours. With a few minutes of data, and with these settings, the training should be ready in under 10 minutes.
   - Note that everything happens on the server side, so if the training takes much longer than expected, you don't need to keep the browser session open if you need to shut down your computer.
 - Once the training is complete, you'll see the accuracy. With EEG-data that can be messy and have lots of artefacts from blinking, muscle twitching etc., everything above 90% or so can be considered a success.
-  - While 100% accuracy might at first glance be a goal to desire, there's a risk of "overfitting", meaning your model works perfect with the exact data samples you've used, but not with data it hasn't seen before. This often happens with smaller data amounts and too large neural networks. 
+  - While 100% accuracy might at first glance be a goal to desire, there's a risk of "overfitting", meaning your model works perfectly with the exact data samples you've used, but not with data it hasn't seen before. This often happens with smaller data amounts and too large neural networks. 
 
 ![](/images/EI_012.png)
 
@@ -335,7 +335,7 @@ The program is very straightforward:
   - This is to cover e.g. for situations when the sending program has been stopped, and you want the blower to stop without having to unpower the blower.
 - If you connect the Photon 2 directly to your computer, you can, using a serial monitor, test the blower manually by transmitting a number 0-255.
 - If you are going to use Wi-Fi, you need to know its IP-address to be able to connect to it. 
-  - When you have connected the Photon 2 to your computer, the program is printing its IP-adress to the terminal, so store it somewhere for later use.
+  - When you have connected the Photon 2 to your computer, the program is printing its IP-address to the terminal, so store it somewhere for later use.
 
 There are very few settings in the program: `MOSFET_PIN`, `PWM_MIN` and `PWM_MAX`, `SERVER_PORT`, and `COMMAND_TIMEOUT_MS`. Using the hardware in this project, you might though not need to change them.
 
@@ -363,7 +363,7 @@ Once you are ready:
 - Start your Photon 2 and provide the blower with power.
   - The really first time you might want to connect your computer to the MCU, once you see that it works you can use Wi-Fi if you want.
 - Feel free to put a ping pong ball on your blower outlet!
-- Start the program from a command prompt with `python EEG_ball_levitation_v0.4.3.py --wifi-host <Photon 2 IP-adress> --wifi-port 9000`. 
+- Start the program from a command prompt with `python EEG_ball_levitation_v0.4.3.py --wifi-host <Photon 2 IP-address> --wifi-port 9000`. 
 
 ➨➤ If everything works alright, the blower should start reacting to your mental state!
 
@@ -378,12 +378,12 @@ The program works like this:
 
 - It connects to the Photon 2, either through serial, or through Wi-Fi.
 - It opens the Keras .h5-file if it exists, otherwise the Tensorflow Lite file. Both are exported from Edge Impulse.
-- Using the Brainflow library it connects to Muse EEG, and starts receiving signals.
+- Using the BrainFlow library it connects to Muse EEG, and starts receiving signals.
 - Using the [Spectral Analysis Python-library](https://github.com/edgeimpulse/processing-blocks/tree/master/spectral_analysis) from Edge Impulse, it processes features exactly as in EI Studio.
 - It runs inference against these processed features.
 - Finally, it sends a number 0-255 to the Photon 2. 
   - By default it averages the latest few inference results to provide a smoother user experience. Otherwise it might jump too frequently between the three states.
-- It continuosly prints inference results for testing and possible troubleshooting needs.
+- It continuously prints inference results for testing and possible troubleshooting needs.
 
 #### Selected parameters
 
@@ -397,7 +397,7 @@ MODEL_TFLITE = "EEG_float32_FFT8_1.lite" # "EEG_float32.lite"
 MODEL_H5 = "EEG_model_64.h5"
 ```
 
-**Impulse settings:** These are from `Create impulse`in EI. The first two ones have to be same as in EI, but feel free to experiment with the stride if you want to. See [this documentation](https://docs.edgeimpulse.com/studio/projects/impulse-design#time-series-audio,-vibration,-movements), especially the sketch, how the stride (= window increase) works.
+**Impulse settings:** These are from `Create impulse` in EI. The first two ones have to be same as in EI, but feel free to experiment with the stride if you want to. See [this documentation](https://docs.edgeimpulse.com/studio/projects/impulse-design#time-series-audio,-vibration,-movements), especially the sketch, how the stride (= window increase) works.
 ```
 FS = 256.0  # Hz
 WINDOW_SECONDS = 2.0  # window size in seconds
@@ -415,7 +415,7 @@ TARGET_THRESHOLD = 0.7
 CLASS_HISTORY_WINDOWS = 8  # number of last predicted classes to majority-vote
 ```
 
-**Spectral features settings:** These needs to be identical as in the spectral features menu in EI. So, if you for example in EI Studio find out that a FFT length of 16 works better, you need to change `FFT_LENGTH` to 16 here. These parameters, together with the window size, ensure the input layer to your neural network will be same as in EI. It they aren't, you'll get a message like `...got 54, expected 36...`. 
+**Spectral features settings:** These need to be identical as in the spectral features menu in EI. So, if you for example in EI Studio find out that a FFT length of 16 works better, you need to change `FFT_LENGTH` to 16 here. These parameters, together with the window size, ensure the input layer to your neural network will be same as in EI. It they aren't, you'll get a message like `...got 54, expected 36...`. 
 
 
 ```
@@ -500,7 +500,7 @@ I had also considered 3D-printing some type of funnel or similar to possibly inc
 
 ### I don't want to use a computer!
 
-As mentioned earlier, the computer, and even the Photon 2, can be replaced with a device supporting Brainflow and BLE. This can e.g. be a Raspberry, but there are other candidates as well that are expected to work as Brainflow is a quite versatile platform. 
+As mentioned earlier, the computer, and even the Photon 2, can be replaced with a device supporting BrainFlow and BLE. This can e.g. be a Raspberry, but there are other candidates as well that are expected to work as BrainFlow is a quite versatile platform. 
 
 ## ML-model aspects
 
@@ -515,22 +515,22 @@ Brains are different, and my EEG-signals **might** be different from yours, mean
 While testing the model, I had intermittent issues when the model simply did not perform as it should. It could e.g. always predict calm with 100% confidence, regardless of what I did, or the prediction seemed to be random.
 
 I found two reasons for this behavior:
-* As the winter has arrived, the air is quite dry. This means that the dry electrodes on the EEG-device don't make good contact with the skin during the first few minutes. It is actually recommended to wet them with water to speed up the initial connection.
-* Brain signals are measured in milli-volts, and at least the Muse EEG-device is sensitive to 50 Hz interference from nearby power conduits or cables. So, unless you want to go out in the forest or desert, at least stay a meter or two from the nearest electricity cables.
+* As the winter has arrived, the air is quite dry. This means that the dry electrodes on the EEG device don't make good contact with the skin during the first few minutes. It is actually recommended to wet them with water to speed up the initial connection.
+* Brain signals are measured in milli-volts, and at least the Muse EEG device is sensitive to 50 Hz interference from nearby power conduits or cables. So, unless you want to go out in the forest or desert, at least stay a meter or two from the nearest electricity cables.
 
 ## Use only frontal electrodes
 
 There is some research (Krigolson et al, Sidelinger et al, Beiramwand et al, Zhang et al) indicating that frontal/prefrontal channels can capture meaningful cognitive signals such as alpha activity and workload-related change. This means in practice that you *might* get better performance by only using data from the channels eeg2 and eeg3 as these map to AF7 (left frontal) and AF8 (right frontal). Right now all four channels are used, possible providing data not of importance for measuring mental state.
 
-To change this, you can simple unselect eeg1 and eeg4 in Edge Impulse and retrain. In addition you also need to change the Python program slightly to accommodate for fewer channels. Feel free to experiment! 
+To change this, you can simply unselect eeg1 and eeg4 in Edge Impulse and retrain. In addition you also need to change the Python program slightly to accommodate for fewer channels. Feel free to experiment! 
 
 ![](/images/Muse_frontal_electrodes_orig_compr.jpg)
 
 # What you've learned
 
-By following this project, you’ve learned how to capture real-time EEG data from a Muse headband, transform it into spectral features using Edge Impulse’s processing blocks, and classify mental states with an machine-learning model. You’ve also seen how these predictions can be used to control physical hardware, here driving a blower via a Particle Photon 2 to create a live biofeedback loop. Along the way, you gained practical experience in sensor integration, feature extraction, model deployment, and building an end-to-end ML-powered interactive system.
+This concludes the project, by following it, you’ve learned how to capture real-time EEG data from a Muse headband, transform it into spectral features using Edge Impulse’s processing blocks, and classify mental states with a machine-learning model. You’ve also seen how these predictions can be used to control physical hardware, here driving a blower via a Particle Photon 2 to create a live biofeedback loop. Along the way, you gained practical experience in sensor integration, feature extraction, model deployment, and building an end-to-end ML-powered interactive system.
 
-Hopefully the project, while not for clinical use, has also given some ideas on how you can combine machine learning with biosensors, perhaps inventing next wearable device!
+Hopefully the project, while not for clinical use, has also given some ideas on how you can combine machine learning with biosensors, perhaps inventing your next wearable device!
 
 ---
 # License
