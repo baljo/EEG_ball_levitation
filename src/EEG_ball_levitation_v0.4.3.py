@@ -446,15 +446,15 @@ def send_blower_pwm(link: BlowerLink | None, blower_pwm: int):
 
 def map_class_to_blower_pwm(pred_class: int) -> int:
     """
-    Mapping requested (now in 0–255 PWM range as Photon 2 expects):
+    Mapping (pls experiment yourself with the values, below an intial suggestion):
     - sleep     -> 0       (fan off)
     - calm      -> ~50 %   -> 128
     - non_calm  -> 100 %   -> 255
     """
     if pred_class == CLASS_SLEEP:
-        return 250
+        return 150
     elif pred_class == CLASS_CALM:
-        return 253
+        return 200
     elif pred_class == CLASS_NON_CALM:
         return 255
     else:

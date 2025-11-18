@@ -69,6 +69,8 @@ The predicted class maps to a PWM value between 0 and 255, sent over Wi-Fi to a 
 * Ping Pong ball
 * 12 V power source (wall adapter or battery)
 
+![](/images/Hardware.png)
+
 Optional:
 * Powerbank (only if you want the Photon 2 to be stand-alone and not connected to your computer)
 * 3D-printer, if you want to print a protective case for the Grove Shield, or a stand for the blower
