@@ -548,6 +548,9 @@ Hopefully the project, while not for clinical use, has also given some ideas on 
 This project is open source and can be reused or modified for research, education or personal development.
 
 ---
+### Attributions
+
+All external images used in this project are attributed through the links provided directly in their captions. All other images are the author's own.
 
 
 ### References
