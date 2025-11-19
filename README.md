@@ -29,6 +29,7 @@ The project combines low-tech components, like a blower and ping pong ball, with
   - [Wiring](#wiring)  
   - [Install the Photon 2 program controlling the blower](#install-the-photon-2-program-controlling-the-blower)  
   - [Start the main program and levitate!](#start-the-main-program-and-levitate)  
+    - [Demonstration](#demonstration)
   - [Other programs](#other-programs)  
 - [Further suggestions](#further-suggestions)  
   - [Hardware aspects](#hardware-aspects)  
