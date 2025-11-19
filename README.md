@@ -401,7 +401,7 @@ The program continuously prints inference results for testing and possible troub
 - In the video below you see the latest prediction, and predictions for the last 8 classes. At the right is the action sent to the Photon 2 and blower.
 - At the far right a live video of the author and the levitating ball.
 - Note that all these are in sync in the video. 
-- The red piece of yarn is to prevent the ball to oscillate sideways at low speeds.
+- The red piece of yarn is to prevent the ball oscillating horizontally at low speeds.
 
 ![](/images/Inferencing_output.gif)
 ---
