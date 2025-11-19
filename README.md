@@ -392,7 +392,7 @@ The program works like this:
 - Using the [Spectral Analysis Python-library](https://github.com/edgeimpulse/processing-blocks/tree/master/spectral_analysis) from Edge Impulse, it processes features exactly as in EI Studio.
 - It runs inference against these processed features.
 - Finally, it sends a number 0-255 to the Photon 2. 
-  - By default it averages the latest few inference results to provide a smoother user experience. Otherwise it might jump too frequently between the three states.
+  - By default it averages the latest 8 inference results to provide a smoother user experience. Otherwise it might jump too frequently between the three states.
 - It continuously prints inference results for testing and possible troubleshooting needs. In the output below you see the latest prediction, and predictions for the last 8 classes. Far right you see the action send to the Photon 2 and blower.   
 
 ![](/images/Inferencing_output.gif)
