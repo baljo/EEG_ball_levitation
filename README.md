@@ -395,12 +395,15 @@ The program works like this:
 - Finally, it sends a number 0-255 to the Photon 2. 
   - By default it averages the latest 8 inference results to provide a smoother user experience. Otherwise it might jump too frequently between the three states.
 
+---
 ### Demonstration
-- The program continuously prints inference results for testing and possible troubleshooting needs. 
-  - In the output below you see the latest prediction, and predictions for the last 8 classes. Far right you see the action send to the Photon 2 and blower.
-  - At the far right a live video of the author and the levitating ball.    
+The program continuously prints inference results for testing and possible troubleshooting needs. 
+- In the video below you see the latest prediction, and predictions for the last 8 classes. At the right is the action sent to the Photon 2 and blower.
+- At the far right a live video of the author and the levitating ball.
+- Note that all these are in sync in the video. 
 
 ![](/images/Inferencing_output.gif)
+---
 
 #### Selected parameters
 
