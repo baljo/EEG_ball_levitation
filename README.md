@@ -362,7 +362,7 @@ const unsigned long COMMAND_TIMEOUT_MS = 30000UL;  // 30 seconds (adjust if you 
 
 ### Usage
 
-Before you start the program the first time, you should take a look at the [Selected parameters](https://github.com/baljo/EEG_ball_levitation?tab=readme-ov-file#selected-parameters) below to understand which parameters you might need to change. These might be the file name of the ML-model you downloaded from the EI dashboard, window size, name of labels, number of FFT windows, etc. All these parameters are depending on your project setup in Edge Impulse Studio. 
+Before you start the program the first time, you should take a look at the [Selected parameters](#selected-parameters) below to understand which parameters you might need to change. These might be the file name of the ML-model you downloaded from the EI dashboard, window size, name of labels, number of FFT windows, etc. All these parameters are depending on your project setup in Edge Impulse Studio. 
 
 You change the parameter values in the main Python program `EEG_ball_levitation_v0.4.3.py`, [direct link](/src/EEG_ball_levitation_v0.4.3.py).
 
