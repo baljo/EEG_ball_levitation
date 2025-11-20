@@ -325,8 +325,6 @@ Optional:
 
 ![](/images/MOSFET.jpg)
 
-### Mount
-
 
 
 ### Muse 2
@@ -506,7 +504,7 @@ While this project works as intended, there is of course room for adjustments or
 
 ### Ball not levitating very high?
 
-**Note:** The video is shot in a lightbox, and as the ceiling of the box is quite low, the turbulence makes the ball oscillating more, and a few centimeters lower than in free air!
+**Note:** Two of the three videos are shot in a lightbox, and as the ceiling of the box is quite low, the turbulence makes the ball oscillating more, and a few centimeters lower than in free air!
 
 Having said that, with 12V the blower is still a bit too weak to blow the ball very high. I have not tried to give it more oomph, but a reviewer mentioned they had run it with 20V. Not recommending it, but let me know the results if you try 😉.
 
