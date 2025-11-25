@@ -1,1 +1,4 @@
-src/processing-blocks
+images/EEG-ball_levitation.mlt
+images/EEG-ball_levitation.mp4
+images/*.mp4
+images/*.mlt

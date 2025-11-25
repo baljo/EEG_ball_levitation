@@ -14,7 +14,14 @@ This idea as such is not novel - there are earlier projects using entry level EE
 
 The project combines low-tech components, like a blower and ping pong ball, with high-tech components like an EEG device and the Edge Impulse platform.
 
+
+
 ![](/images/Final_video.gif)
+
+#### External accompanying video
+
+In addition to the GIF-videos in this tutorial, you can find a short accompanying video from this [YouTube link](https://youtu.be/XAO7eU4EFMw).
+
 ---
 ## Table of contents
 - [Overview](#overview)  
