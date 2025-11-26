@@ -273,6 +273,12 @@ If the accuracy is very low, the root cause is most often on the data side, or o
 - Building ML-models is an iterative process, even more so for this type of EEG-project. Thus, I recommend that you initially collect a smaller amount of data, train and test the model. 
 - If you already in the beginning notice poor accuracy, you might consider deleting or deactivating the uploaded samples and record new data. Once you have a good base, you can continue collecting more and more diverse data.
 
+#### Try EON Tuner!
+
+Even if the performance of the ML-model is great, there might still be room for improvements, e.g. related to memory need or latency. Instead of manually trying different parameters, training, and testing, you can use the EON Tuner. The EON Tuner helps you quickly run hyperparameter searches that explore different pre-processing + model architectures optimized for your defined objectives.
+
+In this particular project, where the inference is done on a computer - or later a SBC like Raspberry Pi - the latency and memory footprint were not a problem. Instead the main objective was to get as good accuracy as possible. So, my initial thought was to be satisfied when the accuracy was over 92% or so. But I was happy that I tried the EON Tuner as it found a model with a training accuracy of  97%, and test accuracy of 94%. And this with a smaller model than the one I initially was satisfied with. 
+
 
 ### Test the model
 
