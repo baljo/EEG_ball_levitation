@@ -2,7 +2,7 @@
 
 ![](/images/Ping-Pong-ball.jpg)
 
-## Overview
+## Introduction
 
 While this project is neither *brain surgery* nor *rocket science*, it still involves using only your mind to get a ball flying into the air!
 
@@ -24,7 +24,7 @@ In addition to the GIF-videos in this tutorial, you can find a short accompanyin
 
 ---
 ## Table of contents
-- [Overview](#overview)  
+- [Introduction](#introduction)  
 - [Why this matters](#why-this-matters)  
 - [How it works conceptually](#how-it-works-conceptually)  
 - [Hardware needed](#hardware-needed)  
