@@ -20,34 +20,34 @@ The project combines low-tech components, like a blower and ping pong ball, with
 
 #### External accompanying video
 
-In addition to the GIF-videos in this tutorial, you can find a short accompanying video from this [YouTube link](https://youtu.be/XAO7eU4EFMw).
+In addition to the GIF-videos in this tutorial, you can find a short accompanying video from this [YouTube link](https://youtu.be/bB2MzE0jKWs).
 
 ---
 ## Table of contents
 - [Introduction](#introduction)  
-- [Why this matters](#why-this-matters)  
-- [How it works conceptually](#how-it-works-conceptually)  
-- [Hardware needed](#hardware-needed)  
-- [Build instructions](#build-instructions)  
-  - [Install Python programs](#install-python-programs)  
-  - [Set up your Muse EEG device](#set-up-your-muse-eeg-device)  
-  - [Capture EEG-data for Edge Impulse](#capture-eeg-data-for-edge-impulse)  
-  - [Build a model with Edge Impulse Studio](#build-a-model-with-edge-impulse-studio)  
-  - [Wiring](#wiring)  
-  - [Install the Photon 2 program controlling the blower](#install-the-photon-2-program-controlling-the-blower)  
-  - [Start the main program and levitate!](#start-the-main-program-and-levitate)  
-    - [Demonstration](#demonstration)
-  - [Other programs](#other-programs)  
-- [Further suggestions](#further-suggestions)  
-  - [Hardware aspects](#hardware-aspects)  
-  - [ML-model aspects](#ml-model-aspects)  
-- [What you've learned](#what-youve-learned)  
+1. [Why this matters](#1-why-this-matters)  
+2. [How it works conceptually](#2-how-it-works-conceptually)  
+3. [Hardware needed](#3-hardware-needed)  
+4. [Build instructions](#4-build-instructions)  
+4.1 [Install Python programs](#41-install-python-programs)  
+4.2 [Set up your Muse EEG device](#42-set-up-your-muse-eeg-device)  
+4.3 [Capture EEG-data for Edge Impulse](#43-capture-eeg-data-for-edge-impulse)  
+4.4 [Build a model with Edge Impulse Studio](#44-build-a-model-with-edge-impulse-studio)  
+4.5 [Wiring](#45-wiring)  
+4.6 [Install the Photon 2 program controlling the blower](#46-install-the-photon-2-program-controlling-the-blower)  
+4.7 [Start the main program and levitate!](#47-start-the-main-program-and-levitate)  
+4.8 [Demonstration](#48-demonstration)  
+4.9 [Other programs](#49-other-programs)   
+5. [Further suggestions](#5-further-suggestions)  
+5.1 [Hardware aspects](#51hardware-aspects)  
+5.2 [ML-model aspects](#52-ml-model-aspects)  
+6. [What you've learned](#6-what-youve-learned)  
 - [License](#license)  
 - [References](#references)  
 
 ---
 
-## Why This Matters
+## 1. Why This Matters
 
 ### Mental awareness and mental fatigue
 
@@ -64,7 +64,7 @@ This project applies the same principle in a more accessible way: the user’s m
 
 ---
 
-## How it works conceptually
+## 2. How it works conceptually
 
 #### 1. EEG input
 A Muse headset streams four EEG channels via BrainFlow. The program collects short overlapping windows for processing.
@@ -98,7 +98,7 @@ The levitating ping-pong ball also demonstrates **Bernoulli’s principle**: the
 ---
 
 
-# HARDWARE NEEDED
+# 3. HARDWARE NEEDED
 
 * [Muse 2 EEG headband](https://eu.choosemuse.com/products/muse-2)
 * PC running Python and BrainFlow
@@ -117,17 +117,17 @@ Optional:
 
 In this project a PC is used as an edge device, but it can easily be replaced with e.g. a Raspberry Pi or any other BLE-equipped device running Python, and supported by BrainFlow. With a Raspberry Pi you don't even need the Photon 2 as long as you can connect a MOSFET to it. And, if Python is not your cup of tea, BrainFlow supports almost any modern language like Julia, Rust, C#, Swift, TypeScript, etc. Even some game engines are supported! 
 
-# BUILD INSTRUCTIONS
+# 4. BUILD INSTRUCTIONS
 
 In this section you'll learn how to collect data, train and deploy a ML-model, connect the devices, and finally, let the ping pong ball levitate.
 
-## Install Python programs
+## 4.1 Install Python programs
 
 You'll basically only need two Python programs, one for capturing data to be imported into Edge Impulse, another for inferencing and sending signals to the blower. While these programs of course could be combined, and controlled via parameters, or a menu, it's often easier to keep completely different modules separated.
 
 Clone the repository, decide whether you want to install it directly on your device, or in a virtual environment. Then open a command prompt and run `pip install -r requirements.txt`. This will install all needed libraries to the selected environment.
 
-## Set up your Muse EEG device
+## 4.2 Set up your Muse EEG device
 
 Start your Muse headset and wear it properly, it should **not** be connected to your phone or other device in this project.
 
@@ -135,7 +135,7 @@ Start your Muse headset and wear it properly, it should **not** be connected to 
 
 *The author and his EEG device captured in the wild*
 
-## Capture EEG-data for Edge Impulse
+## 4.3 Capture EEG-data for Edge Impulse
 
 In this chapter you'll learn how to collect data for Edge Impulse.
 
@@ -166,7 +166,7 @@ OUTPUT_DIR = "data"             # folder for CSV files
 - Keep the same label, or change it when ready to move to next one, rinse and repeat.
   - Try to collect roughly same amount of data for each label.
 
-## Build a model with Edge Impulse Studio
+## 4.4 Build a model with Edge Impulse Studio
 
 In this section you'll learn how to import the EEG-data, build, train, test, and deploy a ML-model. 
 A prerequisite for the following steps is that you have created an EI account (free tier is more than enough for this project), and logged into it.
@@ -297,7 +297,7 @@ Deploying the model for this project is very simple as you only need to download
 
 ![](/images/EI_018.png)
 
-## Wiring
+## 4.5 Wiring
 
 Wiring is extremely simple, no soldering needed if you use the recommended hardware. Do note that you can choose to have your Photon 2 connected to your computer and communicate through a serial port, or you can have it as a standalone device and communicate through Wi-Fi.
 
@@ -338,7 +338,7 @@ Optional:
 * No wiring needed, (or even possible!), but set up the device according to the instructions. Remember that it can only stream to one device at a time, so don't have it connected to your phone while streaming EEG-data for this project.
 
 
-## Install the Photon 2 program controlling the blower
+## 4.6 Install the Photon 2 program controlling the blower
 Upload the [program](/src/levitate-ball-v0-1.ino) to your Photon 2. As the program doesn't need external libraries, you can use Particle's Web IDE if you want.
 
 ### How it works
@@ -365,7 +365,7 @@ const unsigned long COMMAND_TIMEOUT_MS = 30000UL;  // 30 seconds (adjust if you 
 ```
 
 
-## Start the main program and levitate!
+## 4.7 Start the main program and levitate!
 
 ### Usage
 
@@ -401,7 +401,7 @@ The program works like this:
   - By default it averages the latest 8 inference results to provide a smoother user experience. Otherwise it might jump too frequently between the three states.
 
 ---
-### Demonstration
+## 4.8 Demonstration
 The program continuously prints inference results for testing and possible troubleshooting needs. 
 - In the video below you see the latest prediction, and predictions for the last 8 classes. At the right is the action sent to the Photon 2 and blower.
 - At the far right a live video of the author and the levitating ball.
@@ -500,14 +500,14 @@ For troubleshooting purposes only:
 * --test-raw "raw flattened data" = copy **raw flattened data** from EI **before** the spectral analysis block
 
 
-## Other programs
+## 4.9 Other programs
 There are a few other Python programs, versions, and files in the [src folder](/src/). Apart from the data capture program, these are not needed for normal operation, I have used them when building up the main program module by module, or for troubleshooting purposes. Touch them at your own risk!
 
-# Further suggestions
+# 5. Further suggestions
 
 While this project works as intended, there is of course room for adjustments or improvements.
 
-## Hardware aspects
+## 5.1 Hardware aspects
 
 ### Ball not levitating very high?
 
@@ -528,7 +528,7 @@ I had also considered 3D-printing some type of funnel or similar to possibly inc
 
 As mentioned earlier, the computer, and even the Photon 2, can be replaced with a device supporting BrainFlow and BLE. This can e.g. be a Raspberry, but there are other candidates as well that are expected to work as BrainFlow is a quite versatile platform, end Edge Impulse even more so.
 
-## ML-model aspects
+## 5.2 ML-model aspects
 
 As with all ML-models, they can always be improved. Here I'll share a few experiences and thoughts.
 
@@ -544,7 +544,7 @@ I found two reasons for this behavior:
 * As the winter has arrived, the air is quite dry. This means that the dry electrodes on the EEG device don't make good contact with the skin during the first few minutes. It is actually recommended to wet them with water to speed up the initial connection.
 * Brain signals are measured in milli-volts, and at least the Muse EEG device is sensitive to 50 Hz interference from nearby power conduits or cables. So, unless you want to go out in the forest or desert, at least stay a meter or two from the nearest electricity cables.
 
-## Use only frontal electrodes
+## 5.3 Use only frontal electrodes
 
 There is some research - Krigolson et al (2017), Sidelinger et al (2023), Beiramwand et al (2024), Zhang et al (2022) - indicating that frontal/prefrontal channels can capture meaningful cognitive signals such as alpha activity and workload-related change. This means in practice that you *might* get better performance by only using data from the channels eeg2 and eeg3 as these map to AF7 (left frontal) and AF8 (right frontal). Right now all four channels are used, possible providing data not of importance for measuring mental state.
 
@@ -552,7 +552,7 @@ To change this, you can simply unselect eeg1 and eeg4 in Edge Impulse and retrai
 
 ![](/images/Muse_frontal_electrodes_orig_compr.jpg)
 
-# What you've learned
+# 6. What you've learned
 
 This concludes the project, by following it, you’ve learned how to capture real-time EEG data from a Muse headband, transform it into spectral features using Edge Impulse’s processing blocks, and classify mental states with a machine-learning model. You’ve also seen how these predictions can be used to control physical hardware, here driving a blower via a Particle Photon 2 to create a live biofeedback loop. Along the way, you gained practical experience in sensor integration, feature extraction, model deployment, and building an end-to-end ML-powered interactive system.
 
