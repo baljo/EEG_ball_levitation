@@ -39,7 +39,7 @@ In addition to the GIF-videos in this tutorial, you can find a short accompanyin
 4.8 [Demonstration](#48-demonstration)  
 4.9 [Other programs](#49-other-programs)   
 5. [Further suggestions](#5-further-suggestions)  
-5.1 [Hardware aspects](#51hardware-aspects)  
+5.1 [Hardware aspects](#51-hardware-aspects)  
 5.2 [ML-model aspects](#52-ml-model-aspects)  
 6. [What you've learned](#6-what-youve-learned)  
 - [License](#license)  
@@ -47,7 +47,7 @@ In addition to the GIF-videos in this tutorial, you can find a short accompanyin
 
 ---
 
-## 1. Why This Matters
+## 1. Why this matters
 
 ### Mental awareness and mental fatigue
 
@@ -98,7 +98,7 @@ The levitating ping-pong ball also demonstrates **Bernoulli’s principle**: the
 ---
 
 
-# 3. HARDWARE NEEDED
+# 3. Hardware needed
 
 * [Muse 2 EEG headband](https://eu.choosemuse.com/products/muse-2)
 * PC running Python and BrainFlow
@@ -117,7 +117,7 @@ Optional:
 
 In this project a PC is used as an edge device, but it can easily be replaced with e.g. a Raspberry Pi or any other BLE-equipped device running Python, and supported by BrainFlow. With a Raspberry Pi you don't even need the Photon 2 as long as you can connect a MOSFET to it. And, if Python is not your cup of tea, BrainFlow supports almost any modern language like Julia, Rust, C#, Swift, TypeScript, etc. Even some game engines are supported! 
 
-# 4. BUILD INSTRUCTIONS
+# 4. Build instructions
 
 In this section you'll learn how to collect data, train and deploy a ML-model, connect the devices, and finally, let the ping pong ball levitate.
 
