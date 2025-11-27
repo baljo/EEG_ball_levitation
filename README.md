@@ -532,7 +532,39 @@ I had also considered 3D-printing some type of funnel or similar to possibly inc
 
 ### I don't want to use a computer!
 
-As mentioned earlier, the computer, and even the Photon 2, can be replaced with a device supporting BrainFlow and BLE. This can e.g. be a Raspberry, but there are other candidates as well that are expected to work as BrainFlow is a quite versatile platform, end Edge Impulse even more so.
+As mentioned earlier, the computer, and even the Photon 2, can be replaced with a device supporting BrainFlow and BLE. This can e.g. be a Raspberry, but there are other candidates as well that are expected to work as BrainFlow is a quite versatile platform, and Edge Impulse even more so.
+
+#### How can I replace the computer with a Raspberry Pi?
+
+The main bottleneck when moving away from a computer is BLE throughput. A secondary bottleneck is inference speed, which ideally needs to stay around 50-100 ms per cycle for proper biofeedback. You can influence inference speed by balancing your ML model, but you cannot meaningfully improve BLE speed. In practice, this means the minimum Raspberry Pi version is RPi 4. A Pi 3B/3B+ or Zero 2 might technically run the ML model, but the BLE latency is expected to be far too large for usable results.
+
+With a Pi 5 or Pi 4 - and if you also want to eliminate the Photon 2 - these are the steps to follow:
+
+- Instead of:
+  - Muse → PC (BrainFlow + EI model in Python) → USB serial → Photon 2 → MOSFET → blower  
+- You switch to:
+  - Muse → RPi (BrainFlow + EI model in Python + GPIO PWM) → MOSFET → blower
+
+**On the Raspberry Pi side**
+
+- Install the OS, base tools, and required libraries *(BrainFlow, Edge Impulse SDK, NumPy, SciPy, etc.)*
+- Enable BLE.
+- Clone the GitHub repository.
+- Update any PC-specific paths (e.g. `c:\users\user\...`) to Linux paths (e.g. `/home/pi/...`).
+- Choose a hardware-PWM-capable GPIO pin (e.g. GPIO 12, 13, or 18).
+- Use a GPIO library (`gpiozero`, `RPi.GPIO`, or `pigpio`) from the same Python script that runs the model.
+
+**Wiring the MOSFET to the Pi**
+
+- Gate → the selected PWM GPIO  
+- Source → Pi GND (and connect Pi GND to the blower supply GND)  
+- Drain → blower negative  
+- Blower positive → 12 V supply  
+- Add a flyback diode if the blower is a brushed DC motor (unless already integrated)
+
+Electrically this is almost identical to driving the blower from the Photon 2, with the only difference being the lower gate drive voltage (3.3 V instead of 5 V). A logic-level MOSFET will handle this without issues.
+
+
 
 ## 5.2 ML-model aspects
 
