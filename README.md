@@ -568,7 +568,7 @@ Electrically this is almost identical to driving the blower from the Photon 2, w
 
 ## 5.2 ML-model aspects
 
-As with all ML-models, they can always be improved. Related to the Edge Impulse part and the model performance, you find some insights in the [Train the model](#train-the-model) section. Here I'll share a few additional experiences and thoughts.
+As with all ML-models, they can always be improved. Related to the Edge Impulse part and the model performance, you find some insights in the [Train the model](#train-the-model) section (specifically *Accuracy low?* and *EON Tuner*). Here I'll share a few additional experiences and thoughts.
 
 ### Can you use my brain signals?
 
